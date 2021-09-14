@@ -42,6 +42,16 @@ public class LowerMenu : MonoBehaviour
         {
             characterListController.OpenTab();
         }
+
+        if (currentTab == Tabs.Item)
+        {
+            itemListController.OpenTab();
+        }
+
+        if (currentTab == Tabs.Skill)
+        {
+            skillListController.OpenTab();
+        }
     }
 
     public void CloseAllTabs()

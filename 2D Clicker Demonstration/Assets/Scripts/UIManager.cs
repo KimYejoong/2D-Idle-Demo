@@ -13,11 +13,11 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        goldDisplayText.text = "GOLD : " + DataController.Instance.gold;        
+        goldDisplayText.text = "GOLD : " + DataController.Instance.gold.ToCurrencyString();        
         goldPerClickDisplayText.text = "GOLD PER CLICK: " + DataController.Instance.goldPerClick;
         goldPerSecDisplayText.text = "GOLD PER SECOND : " + DataController.Instance.GetGoldPerSecond();
 
-        goldDisplayTextInLowerPanel.text = "GOLD : " + DataController.Instance.gold;
+        goldDisplayTextInLowerPanel.text = "GOLD : " + DataController.Instance.gold.ToCurrencyString();
     }
 }
 

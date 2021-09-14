@@ -1,0 +1,151 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class SkillButton : MonoBehaviour
+{
+    /*
+    class Skill
+    {
+        float multiplier;
+        float durationTime;
+        float remainingTime;
+
+        Skill(float number, float time)
+        {
+            multiplier = number;
+            durationTime = time;
+        }
+    }
+    */
+
+    public Text skillDisplayText;
+    public CanvasGroup canvasGroup;
+    public Slider slider;
+
+    public Color colorAvailable = Color.green;
+    public Color colorUnavailable = Color.red;
+
+    public Image colorImage;
+
+    public string skillName;
+    public int level;
+
+    [HideInInspector]
+    public int currentCost;
+    public int initialCurrentCost = 1;
+
+    [HideInInspector]
+    public float goldMultiplier;
+    public float initialGoldMultiplier = 2f;    
+
+    public float upgradePower = 1.05f;
+    public float costPower = 4.1f;
+
+    public float duration = 20f; // 스킬 최대 지속 시간
+    public float cooldownDuration = 60f; // 스킬 최대 재사용 대기 시간
+    [HideInInspector]
+    public float remaining; // 스킬 잔여 지속 시간
+    [HideInInspector]
+    public float cooldownRemaining; // 스킬 잔여 재사용 대기 시간
+
+    [HideInInspector]
+    public bool isActivated = false; // 스킬 사용중인지 여부
+
+    [HideInInspector]
+    public bool isPurchased = false;
+
+
+
+    private void Start()
+    {
+        currentCost = initialCurrentCost; // To be loaded at the start of the game
+        DataController.Instance.LoadSkillButton(this);        
+        UpdateUI();
+        StartCoroutine(AutoSaveSkillStatus());        
+    }
+
+    public void PurchaseSkill()
+    {
+        if (DataController.Instance.gold >= currentCost)
+        {
+            isPurchased = true;
+            DataController.Instance.gold -= currentCost;
+            level++;
+
+            UpdateSkill();
+            UpdateUI();
+            DataController.Instance.SaveSkillButton(this);
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        DataController.Instance.SaveSkillButton(this);
+    }
+
+    IEnumerator AutoSaveSkillStatus()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5f);
+            DataController.Instance.SaveSkillButton(this);
+        }
+    }
+
+    public void UpdateSkill()
+    {
+        goldMultiplier = initialGoldMultiplier * (int)Mathf.Pow(upgradePower, level);
+        currentCost = initialCurrentCost * (int)Mathf.Pow(costPower, level);
+    }
+
+    public void UpdateUI()
+    {
+        skillDisplayText.text = skillName + "\nLevel: " + level + "\nCost : " + currentCost + "\nGold Multiplier: " + goldMultiplier
+            + "\nCooldown(remaining/total) : " + cooldownRemaining + "/" + cooldownDuration + "\nDuration(remaining/total)" + remaining + "/" + duration;
+        
+
+        //slider.minValue = 0;
+        //slider.maxValue = currentCost;
+
+        slider.value = (float)(DataController.Instance.gold / currentCost);
+
+        if (isPurchased)
+            canvasGroup.alpha = 1.0f;
+        else
+            canvasGroup.alpha = 0.3f;
+
+        if (DataController.Instance.gold >= currentCost)
+            colorImage.color = colorAvailable;
+        else
+            colorImage.color = colorUnavailable;
+
+    }
+
+    private void Update()
+    {
+        UpdateUI();
+        UpdateSkillTime();
+    }
+
+    public void UseSkill()
+    {
+        if (!isPurchased || isActivated || cooldownRemaining > 0) // 구매하지 않았거나, 이미 사용 중이거나, 재사용 대기 시간이 남아있으면 사용 불가
+            return;
+
+        isActivated = true;
+
+        remaining = duration;
+        cooldownRemaining = cooldownDuration;
+    }
+
+    void UpdateSkillTime()
+    {
+        remaining = Mathf.Clamp(remaining - Time.deltaTime, 0, duration);
+        cooldownRemaining = Mathf.Clamp(cooldownRemaining - Time.deltaTime, 0, cooldownDuration);
+
+        if (remaining == 0)
+            isActivated = false;
+    }
+}

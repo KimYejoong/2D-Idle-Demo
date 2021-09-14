@@ -4,9 +4,11 @@ using UnityEngine;
 using System;
 using System.Text;
 using System.Numerics;
+using System.Linq;
 
 public class DataController : MonoBehaviour
 {
+    #region Singleton
     private static DataController instance;
 
     public static DataController Instance
@@ -27,8 +29,10 @@ public class DataController : MonoBehaviour
             return instance;
         }
     }
+    #endregion
 
-    private CharacterButton[] characterButtons;
+    private CharacterButton[] characterButtons; // 부재시 쌓이는 재화 체크 시 자동 재화 생산 담당하는 캐릭터 버튼을 순회하기 위해 배열로 관리
+    private SkillButton[] skillButtons;
 
     DateTime GetLastPlayDate()
     {
@@ -52,7 +56,7 @@ public class DataController : MonoBehaviour
         UpdateLastPlayDate();
     }
 
-    public BigInteger gold
+    public double gold
     {
         get
         {
@@ -62,7 +66,7 @@ public class DataController : MonoBehaviour
             }
 
             string tempGold = PlayerPrefs.GetString("Gold");
-            return long.Parse(tempGold);
+            return double.Parse(tempGold);
         }
         set
         {
@@ -96,12 +100,15 @@ public class DataController : MonoBehaviour
 
     private void Awake()
     {        
-        characterButtons = FindObjectsOfType<CharacterButton>();        
+        characterButtons = FindObjectsOfType<CharacterButton>();
+        skillButtons = FindObjectsOfType<SkillButton>();
     }
 
     private void Start()
     {
-        gold += GetGoldPerSecond() * timeAfterLastPlay;
+
+        GetGoldMultiplierDuringNotPlaying();
+        
         InvokeRepeating("UpdateLastPlayDate", 0f, 5f);
     }
 
@@ -121,27 +128,61 @@ public class DataController : MonoBehaviour
         PlayerPrefs.SetInt(key + "_cost", upgradeButton.currentCost);
     }
 
-    public void LoadCharacterButton(CharacterButton itemButton)
+    public void LoadCharacterButton(CharacterButton characterButton)
     {
-        string key = itemButton.characterName;
-        itemButton.level = PlayerPrefs.GetInt(key + "_level", 0);
-        itemButton.currentCost = PlayerPrefs.GetInt(key + "_cost", itemButton.initialCurrentCost);
-        itemButton.goldPerSec = PlayerPrefs.GetInt(key + "_goldPerSec");
-        itemButton.isPurchased = (PlayerPrefs.GetInt(key + "_isPurchased") == 1);        
+        string key = characterButton.characterName;
+        characterButton.level = PlayerPrefs.GetInt(key + "_level", 0);
+        characterButton.currentCost = PlayerPrefs.GetInt(key + "_cost", characterButton.initialCurrentCost);
+        characterButton.goldPerSec = PlayerPrefs.GetInt(key + "_goldPerSec");
+        characterButton.isPurchased = (PlayerPrefs.GetInt(key + "_isPurchased") == 1);        
     }
 
-    public void SaveCharacterButton(CharacterButton itemButton)
+    public void SaveCharacterButton(CharacterButton characterButton)
     {
-        string key = itemButton.characterName;
-        PlayerPrefs.SetInt(key + "_level", itemButton.level);
-        PlayerPrefs.SetInt(key + "_cost", itemButton.currentCost);
-        PlayerPrefs.SetInt(key + "_goldPerSec", itemButton.goldPerSec);
+        string key = characterButton.characterName;
+        PlayerPrefs.SetInt(key + "_level", characterButton.level);
+        PlayerPrefs.SetInt(key + "_cost", characterButton.currentCost);
+        PlayerPrefs.SetInt(key + "_goldPerSec", characterButton.goldPerSec);
 
-        if (itemButton.isPurchased)
+        if (characterButton.isPurchased)
             PlayerPrefs.SetInt(key + "_isPurchased", 1);
         else
             PlayerPrefs.SetInt(key + "_isPurchased", 0);
     }
+
+
+    public void LoadSkillButton(SkillButton skillButton)
+    {
+        string key = skillButton.skillName;
+        skillButton.level = PlayerPrefs.GetInt(key + "_level", 0);
+        skillButton.currentCost = PlayerPrefs.GetInt(key + "_cost", skillButton.initialCurrentCost);
+        skillButton.goldMultiplier = PlayerPrefs.GetFloat(key + "_goldMultiplier");
+        skillButton.remaining = PlayerPrefs.GetFloat(key + "_remaining", 0);        
+        skillButton.cooldownRemaining = PlayerPrefs.GetFloat(key + "_cooldownRemaining", 0);        
+        skillButton.isPurchased = (PlayerPrefs.GetInt(key + "_isPurchased") == 1);
+        skillButton.isActivated = (PlayerPrefs.GetInt(key + "_isActivated") == 1);
+    }
+
+    public void SaveSkillButton(SkillButton skillButton)
+    {
+        string key = skillButton.skillName;
+        PlayerPrefs.SetInt(key + "_level", skillButton.level);
+        PlayerPrefs.SetInt(key + "_cost", skillButton.currentCost);
+        PlayerPrefs.SetFloat(key + "_goldMultiplier", skillButton.goldMultiplier);
+        PlayerPrefs.SetFloat(key + "_remaining", skillButton.remaining);        
+        PlayerPrefs.SetFloat(key + "_cooldownRemaining", skillButton.cooldownRemaining);        
+
+        if (skillButton.isPurchased)
+            PlayerPrefs.SetInt(key + "_isPurchased", 1);
+        else
+            PlayerPrefs.SetInt(key + "_isPurchased", 0);
+
+        if (skillButton.isActivated)
+            PlayerPrefs.SetInt(key + "_isActivated", 1);
+        else
+            PlayerPrefs.SetInt(key + "_isActivated", 0);
+    }
+
 
     public int GetGoldPerSecond()
     {
@@ -156,4 +197,80 @@ public class DataController : MonoBehaviour
 
         return goldPerSec;
     }
+
+    public float GetGoldMultiplier()
+    {
+        float goldMultiplier = 1;
+
+        for (int i = 0; i < skillButtons.Length; i++)
+        {
+            if (skillButtons[i].isPurchased && skillButtons[i].isActivated) // 해당 스킬을 구매했고, 현재 사용했을 경우에만 고려
+                
+                goldMultiplier *= skillButtons[i].goldMultiplier;
+
+        }
+
+        return goldMultiplier;
+    }
+
+    public void GetGoldMultiplierDuringNotPlaying()
+    {
+        List<SkillData> goldMultipliers = new List<SkillData>();
+
+        for (int i = 0; i < skillButtons.Length; i++)
+        {
+            if (skillButtons[i].isPurchased) {
+                if (skillButtons[i].isActivated)
+                {
+                    goldMultipliers.Add(new SkillData(skillButtons[i].remaining, skillButtons[i].goldMultiplier)); // 잔여 시간 정보는 필요하니 SkillData로 넘기고
+                    skillButtons[i].remaining = Mathf.Max(skillButtons[i].remaining - timeAfterLastPlay, 0); // 지난 시간만큼 해당 스킬 버튼의 잔여 시간, 잔여 재사용 대기 시간을 감소시킴
+                }
+                skillButtons[i].cooldownRemaining = Mathf.Max(skillButtons[i].cooldownRemaining - timeAfterLastPlay, 0);
+                // Debug.Log("cooldown Adust = " + skillButtons[i].cooldownRemaining + ", timeAfterLastPlay = " + timeAfterLastPlay);
+            }
+        }        
+
+        if (goldMultipliers.Count == 0) // 적용되는 스킬 버프가 따로 없었으면 그냥 지난 시간만큼 바로 처리하고,
+        {
+            gold += GetGoldPerSecond() * timeAfterLastPlay;
+        }
+        else // 스킬 버프 적용 중에 종료했다 다시 켠 경우 버프를 고려하여 획득 재화를 계산함
+        {
+            float tempMultiplier = 1f; // 기본 배수를 일단 1배율로 잡아주고,
+            float tempRemaining = 0f;
+            float prevRemaining = 0f;
+
+            var result = goldMultipliers.OrderBy(skill => skill.remaining).Select(skill => skill); // remaining 오름차순으로 정렬하여 버프가 가장 많이 겹치는 구간 ~ 적게 겹치는 구간 순으로 처리
+
+            for (int i = 0; i < goldMultipliers.Count; i++)
+            {
+                tempRemaining = goldMultipliers[i].remaining - prevRemaining; // i번째 구간만의 remaining을 구함 (이전 구간분 차감)
+
+                for (int j = i; j < goldMultipliers.Count; j++)
+                {
+                    tempMultiplier *= goldMultipliers[j].multiplier; // 이전 구간을 제외하고(j = i ~ Count), 적용 가능한 버프 계수를 누적해서 곱해줌
+                }
+
+                prevRemaining = tempRemaining;
+                tempRemaining = Mathf.Min(goldMultipliers[i].remaining, timeAfterLastPlay); // 게임을 껐다 켠지 얼마 안돼서 잔여 시간이 더 긴 경우, 종료 기간분만큼만 계산해줌. 단, 실제 지속 시간은 이미 위에서 처리해줬음
+
+                Debug.Log("Idle Bonus = " + GetGoldPerSecond() * tempMultiplier * tempRemaining);
+                gold += GetGoldPerSecond() * tempMultiplier * tempRemaining;
+            }
+        }
+    }
+
+    class SkillData
+    {
+        public float remaining;
+        public float multiplier;
+
+        public SkillData(float time, float multi)
+        {
+            remaining = time;
+            multiplier = multi;
+        }
+    }      
+
+
 }

@@ -60,7 +60,7 @@ public class CharacterButton : MonoBehaviour
         {
             if (isPurchased)
             {
-                DataController.Instance.gold += goldPerSec;                
+                DataController.Instance.gold += goldPerSec * DataController.Instance.GetGoldMultiplier();                
             }
 
             yield return new WaitForSeconds(1.0f);

@@ -24,7 +24,6 @@ public class ListPanelController : MonoBehaviour
 
     public void CloseTab()
     {
-        rect.anchoredPosition = Vector2.down * 1000f;
-        Debug.Log("Closed!");
+        rect.anchoredPosition = Vector2.down * 1000f;        
     }
 }
