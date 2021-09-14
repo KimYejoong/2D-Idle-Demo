@@ -235,16 +235,15 @@ public class DataController : MonoBehaviour
             gold += GetGoldPerSecond() * timeAfterLastPlay;
         }
         else // 스킬 버프 적용 중에 종료했다 다시 켠 경우 버프를 고려하여 획득 재화를 계산함
-        {
-            float tempMultiplier = 1f; // 기본 배수를 일단 1배율로 잡아주고,
-            float tempRemaining = 0f;
+        {               
             float prevRemaining = 0f;
 
-            var result = goldMultipliers.OrderBy(skill => skill.remaining).Select(skill => skill); // remaining 오름차순으로 정렬하여 버프가 가장 많이 겹치는 구간 ~ 적게 겹치는 구간 순으로 처리
+            var result = goldMultipliers.OrderBy(skill => skill.remaining); // remaining 오름차순으로 정렬하여 버프가 가장 많이 겹치는 구간 ~ 적게 겹치는 구간 순으로 처리
 
             for (int i = 0; i < goldMultipliers.Count; i++)
             {
-                tempRemaining = goldMultipliers[i].remaining - prevRemaining; // i번째 구간만의 remaining을 구함 (이전 구간분 차감)
+                float tempMultiplier = 1f; // 기본 배수를 일단 1배율로 잡아주고,
+                float tempRemaining = goldMultipliers[i].remaining - prevRemaining; // i번째 구간만의 remaining을 구함 (이전 구간분 차감)
 
                 for (int j = i; j < goldMultipliers.Count; j++)
                 {
@@ -254,7 +253,8 @@ public class DataController : MonoBehaviour
                 prevRemaining = tempRemaining;
                 tempRemaining = Mathf.Min(goldMultipliers[i].remaining, timeAfterLastPlay); // 게임을 껐다 켠지 얼마 안돼서 잔여 시간이 더 긴 경우, 종료 기간분만큼만 계산해줌. 단, 실제 지속 시간은 이미 위에서 처리해줬음
 
-                Debug.Log("Idle Bonus = " + GetGoldPerSecond() * tempMultiplier * tempRemaining);
+                 Debug.Log("Idle time[" + i  + "] = " + tempRemaining + ", tempMultiplier = " + tempMultiplier);               
+                 Debug.Log("Idle Bonus = " + GetGoldPerSecond() * tempMultiplier * tempRemaining);
                 gold += GetGoldPerSecond() * tempMultiplier * tempRemaining;
             }
         }

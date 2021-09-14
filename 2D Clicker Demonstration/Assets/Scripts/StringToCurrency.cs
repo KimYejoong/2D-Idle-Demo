@@ -60,6 +60,8 @@ public static partial class StringToCurrency
             showNumber = temp.ToString("F").Replace(".00", "");
         }
 
+        unitString = currencyUnits[quotient];
+
         return string.Format("{0}{1}{2}", significant, showNumber, unitString);
     }
 }
