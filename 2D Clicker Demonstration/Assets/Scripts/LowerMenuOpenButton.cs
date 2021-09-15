@@ -12,7 +12,6 @@ public class LowerMenuOpenButton : MonoBehaviour
 
     public void OpenMenu()
     {
-        // lowerMenuPanel.SetActive(true);
         lowerMenuPanel.Open();
         mainButtons.SetActive(false);
     }

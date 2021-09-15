@@ -28,6 +28,9 @@ public class ListPanelController : MonoBehaviour
     [SerializeField]
     private GameObject contents;
 
+    public string tabName;
+    private TabNameDisplay tabNameDisplay;
+
     public bool isSorted = false;
     private List<SiblingInfo> originalListInOrder;    
 
@@ -41,7 +44,9 @@ public class ListPanelController : MonoBehaviour
         foreach (Transform child in parentPanel)
         {
             originalListInOrder.Add(new SiblingInfo(child, child.GetSiblingIndex()));            
-        }       
+        }
+
+        tabNameDisplay = FindObjectOfType<TabNameDisplay>();
     }
 
     private void Start()
@@ -53,6 +58,8 @@ public class ListPanelController : MonoBehaviour
     {
         rect.anchoredPosition = originalLocation;
         scrollContent.anchoredPosition = new Vector3(0, 0, 0);
+
+        tabNameDisplay.UpdateTabName(tabName);
     }
 
     public void CloseTab()

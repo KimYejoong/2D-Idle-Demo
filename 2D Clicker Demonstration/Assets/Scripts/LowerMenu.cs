@@ -7,6 +7,9 @@ public class LowerMenu : MonoBehaviour
     [SerializeField]
     private GameObject menuButton;
 
+    [SerializeField]
+    private TopLeftDisplay topLeftDisplay;
+
     private Animator animator;    
 
     private enum Tabs
@@ -33,23 +36,24 @@ public class LowerMenu : MonoBehaviour
 
     public void Open()
     {
+        topLeftDisplay.Open();
         // animator.ResetTrigger("Close");
         animator.Play("Open");
 
         CloseAllTabs();
         
        if (currentTab == Tabs.Character)
-        {
+        {            
             characterListController.OpenTab();
         }
 
         if (currentTab == Tabs.Item)
-        {
+        {         
             itemListController.OpenTab();
         }
 
         if (currentTab == Tabs.Skill)
-        {
+        {         
             skillListController.OpenTab();
         }
     }
@@ -68,6 +72,7 @@ public class LowerMenu : MonoBehaviour
 
     public void Close()
     {
+        topLeftDisplay.Close();
         StartCoroutine(CloseAfterDelay());
     }
 

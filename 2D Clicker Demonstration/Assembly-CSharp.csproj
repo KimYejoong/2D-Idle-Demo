@@ -70,6 +70,8 @@
     <Compile Include="Assets\Scripts\SkillButton.cs" />
     <Compile Include="Assets\Scripts\StringToCurrency.cs" />
     <Compile Include="Assets\Scripts\TabButton.cs" />
+    <Compile Include="Assets\Scripts\TabNameDisplay.cs" />
+    <Compile Include="Assets\Scripts\TopLeftDisplay.cs" />
     <Compile Include="Assets\Scripts\UIManager.cs" />
     <Compile Include="Assets\Scripts\UpgradeButton.cs" />
   </ItemGroup>
