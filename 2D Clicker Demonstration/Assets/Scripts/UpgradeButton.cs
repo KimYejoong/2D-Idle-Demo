@@ -23,9 +23,16 @@ public class UpgradeButton : MonoBehaviour, Purchasable
     public float upgradePower = 1.05f;
     public float costPower = 1.2f;
 
-    private void Start()
+    private ListPanelController listPanelController;
+
+    private void Awake()
     {
         DataController.Instance.LoadUpgradeButton(this);
+        listPanelController = GetComponentInParent<ListPanelController>();
+    }
+
+    private void Start()
+    {        
         UpdateUI();
     }
 
@@ -39,6 +46,8 @@ public class UpgradeButton : MonoBehaviour, Purchasable
 
             UpdateUpgrade();
             UpdateUI();
+
+            listPanelController.TryUpdateSortContents(); // 이미 내용물 정렬 상태일 때에 한해서 갱신된 정보 가지고 재정렬 시도
             DataController.Instance.SaveUpgradeButton(this);
         }
     }

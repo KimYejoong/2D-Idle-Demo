@@ -46,12 +46,14 @@ public class SkillButton : MonoBehaviour, Purchasable
     private void Awake()
     {
         listPanelController = GetComponentInParent<ListPanelController>();
+        DataController.Instance.LoadSkillButton(this);
     }
 
     private void Start()
     {
-        currentCost = initialCurrentCost; // To be loaded at the start of the game
-        DataController.Instance.LoadSkillButton(this);        
+        if (isActivated)
+            BuffDisplayManager.Instance.AddBuffDisplay(this); // DataController도 Start에서 각 SkillButton의 remaining을 차감 처리하기 때문에 로드 시 순간적으로 잔여 시간 표시될 수 있음
+
         UpdateUI();
         StartCoroutine(AutoSaveSkillStatus());        
     }
@@ -68,7 +70,6 @@ public class SkillButton : MonoBehaviour, Purchasable
             UpdateUI();
 
             listPanelController.TryUpdateSortContents(); // 이미 내용물 정렬 상태일 때에 한해서 갱신된 정보 가지고 재정렬 시도
-
             DataController.Instance.SaveSkillButton(this);
         }
     }
@@ -131,6 +132,7 @@ public class SkillButton : MonoBehaviour, Purchasable
 
         remaining = duration;
         cooldownRemaining = cooldownDuration;
+        BuffDisplayManager.Instance.AddBuffDisplay(this);
     }
 
     void UpdateSkillTime()

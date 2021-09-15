@@ -106,10 +106,9 @@ public class DataController : MonoBehaviour
 
     private void Start()
     {
-
-        GetGoldMultiplierDuringNotPlaying();
+        GetGoldMultiplierDuringNotPlaying(); // Awake에서 각 스킬 버튼의 remaining 등의 정보를 로드한 후, DataController의 Start에서 미접속 기간 동안 획득한 재화를 처리하면서 remaining 차감 처리함
         
-        InvokeRepeating("UpdateLastPlayDate", 0f, 5f);
+        InvokeRepeating("UpdateLastPlayDate", 0f, 5f); // 매 5초마다 최종 접속 시각 기록하도록 함
     }
 
     public void LoadUpgradeButton(UpgradeButton upgradeButton)
@@ -224,7 +223,6 @@ public class DataController : MonoBehaviour
                     skillButtons[i].remaining = Mathf.Max(skillButtons[i].remaining - timeAfterLastPlay, 0); // 지난 시간만큼 해당 스킬 버튼의 잔여 시간, 잔여 재사용 대기 시간을 감소시킴
                 }
                 skillButtons[i].cooldownRemaining = Mathf.Max(skillButtons[i].cooldownRemaining - timeAfterLastPlay, 0);
-                // Debug.Log("cooldown Adust = " + skillButtons[i].cooldownRemaining + ", timeAfterLastPlay = " + timeAfterLastPlay);
             }
         }        
 
@@ -251,8 +249,8 @@ public class DataController : MonoBehaviour
                 prevRemaining = tempRemaining;
                 tempRemaining = Mathf.Min(goldMultipliers[i].remaining, timeAfterLastPlay); // 게임을 껐다 켠지 얼마 안돼서 잔여 시간이 더 긴 경우, 종료 기간분만큼만 계산해줌. 단, 실제 지속 시간은 이미 위에서 처리해줬음
 
-                Debug.Log("Idle time[" + i  + "] = " + tempRemaining + ", tempMultiplier = " + tempMultiplier);               
-                Debug.Log("Idle Bonus = " + GetGoldPerSecond() * tempMultiplier * tempRemaining);
+                //Debug.Log("Idle time[" + i + "] = " + tempRemaining + ", tempMultiplier = " + tempMultiplier);
+                //Debug.Log("Idle Bonus = " + GetGoldPerSecond() * tempMultiplier * tempRemaining);
                 gold += GetGoldPerSecond() * tempMultiplier * tempRemaining;
             }
         }

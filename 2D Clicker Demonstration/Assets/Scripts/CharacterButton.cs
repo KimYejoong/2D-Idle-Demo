@@ -32,10 +32,16 @@ public class CharacterButton : MonoBehaviour, Purchasable
     [HideInInspector]
     public bool isPurchased = false;
 
+    private ListPanelController listPanelController;
 
-    private void Start()
+    private void Awake()
     {
         DataController.Instance.LoadCharacterButton(this);
+        listPanelController = GetComponentInParent<ListPanelController>();
+    }
+
+    private void Start()
+    {        
         StartCoroutine(AddGoldLoop());
         UpdateUI();
     }
@@ -50,6 +56,8 @@ public class CharacterButton : MonoBehaviour, Purchasable
 
             UpdateCharacter();
             UpdateUI();
+
+            listPanelController.TryUpdateSortContents(); // 이미 내용물 정렬 상태일 때에 한해서 갱신된 정보 가지고 재정렬 시도
             DataController.Instance.SaveCharacterButton(this);
         }
     }
