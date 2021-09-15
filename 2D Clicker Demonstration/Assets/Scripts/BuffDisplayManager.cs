@@ -29,9 +29,9 @@ public class BuffDisplayManager : MonoBehaviour
     #endregion
 
     [SerializeField]
-    private GameObject buffDisplayText; // Prefab
+    private GameObject buffDisplayText; // 버프 표시 게임오브젝트 Prefab
     [SerializeField]
-    private int spacing = 3;
+    private int spacing = 3; // 줄 간격
 
     private List<BuffDisplayText> list;
 
@@ -42,20 +42,27 @@ public class BuffDisplayManager : MonoBehaviour
 
     private void Start()
     {
-        SortBuffDisplay();
+        StartCoroutine(SortWhenLoaded());
+        // SkillButton에서 Fixed Update 시점에 버프 표시 오브젝트를 생성하므로, Start에서 바로 정렬을 시도해도 정렬할 대상이 없음. 따라서 프레임 종료 시점까지 대기 후 정렬 시도
         StartCoroutine(CorutineUpdate());    
     }
+
+    IEnumerator SortWhenLoaded()
+    {
+        yield return new WaitForEndOfFrame();
+        SortBuffDisplay();
+    }
     
-    IEnumerator CorutineUpdate()
+    IEnumerator CorutineUpdate() // BuffDisplayText에게 업데이트 시도를 맡길 경우 초 감소가 각기 이뤄져 표시가 산만해지므로, 이곳에서 1초마다 일괄 처리 해줌
     {
         while (true)
         {
-            yield return new WaitForSeconds(1f); // 1초마다 갱신
-
             for (int i = 0; i < list.Count; i++)
             {
                 list[i].UpdateDisplayText();
-            }                
+            }
+
+            yield return new WaitForSeconds(1f);
         }
     }
 

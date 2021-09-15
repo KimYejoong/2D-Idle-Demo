@@ -13,10 +13,9 @@ public class BuffDisplayText : MonoBehaviour
     {
         buffDisplayManager = manager;
         this.skill = skill;
-        displayText = GetComponent<Text>();
+        displayText = GetComponent<Text>();        
 
         UpdateDisplayText();
-
     }
 
     public void UpdateDisplayText()

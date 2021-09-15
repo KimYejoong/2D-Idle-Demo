@@ -51,13 +51,19 @@ public class SkillButton : MonoBehaviour, Purchasable
 
     private void Start()
     {
-        if (isActivated && remaining > DataController.Instance.timeAfterLastPlay)
-            BuffDisplayManager.Instance.AddBuffDisplay(this);
-        // DataController도 Start에서 각 SkillButton의 remaining을 차감 처리하기 때문에 로드 시 순간적으로 잔여 시간 표시될 수 있음
-        // 버프 추가 순서를 저장하진 않기 때문에 표시 순서가 바뀔 수는 있음
+        if (isActivated && (remaining - DataController.Instance.timeAfterLastPlay) > 1f) // 게임 끄기 전에 활성화 되어있었을 경우, 다시 켜고도 잔여 시간이 1초를 넘을 경우에 표시 추가함
+            StartCoroutine(AddBuffWhenLoaded());
+        // Start에서 바로 버프 표시 오브젝트를 생성할 경우, 유휴 시간에 의한 remaining 차감이 DataController의 Start()에서 이뤄지므로 게임 끄기 전의 잔여 시간 정보를 표시하게 됨
+        // 따라서 여기서 바로 실행하지 않고, 코루틴으로 Fixed Update 시점까지 강제로 대기한 후 버프 표시 오브젝트를 생성하여 바로 최신화 된 정보를 보여줄 수 있도록 함
 
         UpdateUI();
         StartCoroutine(AutoSaveSkillStatus());        
+    }
+
+    IEnumerator AddBuffWhenLoaded()
+    {
+        yield return new WaitForFixedUpdate();
+        BuffDisplayManager.Instance.AddBuffDisplay(this);
     }
 
     public void PurchaseSkill()
