@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UpgradeButton : MonoBehaviour
+public class UpgradeButton : MonoBehaviour, Purchasable
 {
     public Text upgradeDisplayText;
 
@@ -52,6 +52,11 @@ public class UpgradeButton : MonoBehaviour
     public void UpdateUI()
     {
         upgradeDisplayText.text = upgradeName + "\nCost: " + currentCost + "\nLevel: " + level + "\nNext New GoldPerClick : " + goldByUpgrade;
+    }
+
+    public int GetCost()
+    {
+        return currentCost;
     }
 
 }

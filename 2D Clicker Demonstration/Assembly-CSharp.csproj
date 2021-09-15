@@ -63,8 +63,10 @@
     <Compile Include="Assets\Scripts\DataController.cs" />
     <Compile Include="Assets\Scripts\DoubleButton.cs" />
     <Compile Include="Assets\Scripts\ListPanelController.cs" />
+    <Compile Include="Assets\Scripts\ListPanelSortButton.cs" />
     <Compile Include="Assets\Scripts\LowerMenu.cs" />
     <Compile Include="Assets\Scripts\LowerMenuOpenButton.cs" />
+    <Compile Include="Assets\Scripts\Purchasable.cs" />
     <Compile Include="Assets\Scripts\SkillButton.cs" />
     <Compile Include="Assets\Scripts\StringToCurrency.cs" />
     <Compile Include="Assets\Scripts\TabButton.cs" />

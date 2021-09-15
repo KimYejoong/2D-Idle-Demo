@@ -4,7 +4,7 @@ using System.Numerics;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterButton : MonoBehaviour
+public class CharacterButton : MonoBehaviour, Purchasable
 {
     public Text characterDisplayText;
     public CanvasGroup canvasGroup;
@@ -97,5 +97,10 @@ public class CharacterButton : MonoBehaviour
     private void Update()
     {
         UpdateUI();
+    }
+
+    public int GetCost()
+    {
+        return currentCost;
     }
 }

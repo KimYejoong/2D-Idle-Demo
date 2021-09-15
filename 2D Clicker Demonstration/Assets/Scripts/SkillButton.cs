@@ -3,23 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SkillButton : MonoBehaviour
+public class SkillButton : MonoBehaviour, Purchasable
 {
-    /*
-    class Skill
-    {
-        float multiplier;
-        float durationTime;
-        float remainingTime;
-
-        Skill(float number, float time)
-        {
-            multiplier = number;
-            durationTime = time;
-        }
-    }
-    */
-
     public Text skillDisplayText;
     public CanvasGroup canvasGroup;
     public Slider slider;
@@ -56,7 +41,12 @@ public class SkillButton : MonoBehaviour
     [HideInInspector]
     public bool isPurchased = false;
 
+    private ListPanelController listPanelController;
 
+    private void Awake()
+    {
+        listPanelController = GetComponentInParent<ListPanelController>();
+    }
 
     private void Start()
     {
@@ -76,6 +66,9 @@ public class SkillButton : MonoBehaviour
 
             UpdateSkill();
             UpdateUI();
+
+            listPanelController.TryUpdateSortContents(); // 이미 내용물 정렬 상태일 때에 한해서 갱신된 정보 가지고 재정렬 시도
+
             DataController.Instance.SaveSkillButton(this);
         }
     }
@@ -147,5 +140,10 @@ public class SkillButton : MonoBehaviour
 
         if (remaining == 0)
             isActivated = false;
+    }
+
+    public int GetCost()
+    {
+        return currentCost;
     }
 }
