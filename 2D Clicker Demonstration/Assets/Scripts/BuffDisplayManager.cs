@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class BuffDisplayManager : MonoBehaviour
 {
@@ -39,6 +40,26 @@ public class BuffDisplayManager : MonoBehaviour
         list = new List<BuffDisplayText>();
     }
 
+    private void Start()
+    {
+        SortBuffDisplay();
+        StartCoroutine(CorutineUpdate());    
+    }
+    
+    IEnumerator CorutineUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f); // 1초마다 갱신
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i].UpdateDisplayText();
+            }                
+        }
+    }
+
+    
     public void AddBuffDisplay(SkillButton skill)
     {
         GameObject newBuffDisplayGo = Instantiate(buffDisplayText, transform);
@@ -52,6 +73,16 @@ public class BuffDisplayManager : MonoBehaviour
     public void UpdateBuffDisplayList(BuffDisplayText buffDisplayText)
     {
         list.Remove(buffDisplayText);
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            list[i].transform.position = transform.position + Vector3.down * (list[i].displayText.preferredHeight + spacing) * i;
+        }
+    }
+
+    public void SortBuffDisplay()
+    {
+        list = list.OrderBy(item => item.skill.remaining).ToList();
 
         for (int i = 0; i < list.Count; i++)
         {
