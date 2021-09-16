@@ -2071,6 +2071,9 @@ MonoBehaviour:
   goldPerClickDisplayText: {fileID: 626684017}
   goldPerSecDisplayText: {fileID: 507024168}
   goldDisplayTextInLowerPanel: {fileID: 1300810447}
+  instantText: {fileID: 1703493660455498046, guid: 97b7d00abbc52b8499a359d235adc122,
+    type: 3}
+  poolSize: 8
 --- !u!1 &729314620
 GameObject:
   m_ObjectHideFlags: 0
@@ -3810,7 +3813,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Gold : 99999'

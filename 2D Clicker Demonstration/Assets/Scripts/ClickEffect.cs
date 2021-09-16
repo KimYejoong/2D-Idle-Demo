@@ -21,6 +21,6 @@ public class ClickEffect : MonoBehaviour
     private IEnumerator AutoReturn()
     {
         yield return new WaitForSeconds(_ps.main.duration);        
-        EffectManager.ReturnObject(this);
+        EffectManager.Instance.ReturnObject(this);
     }
 }

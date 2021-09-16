@@ -10,27 +10,26 @@ public class EffectManager : MonoBehaviour
     [SerializeField]
     private int poolSize;
 
-    readonly Queue<ClickEffect> pool = new Queue<ClickEffect>();
+    private readonly Queue<ClickEffect> _pool = new Queue<ClickEffect>();
 
     #region Singleton
-    private static EffectManager instance;
+    private static EffectManager _instance;
 
     public static EffectManager Instance
     {
         get
         {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<EffectManager>();
+            if (_instance != null)
+                return _instance;
+            _instance = FindObjectOfType<EffectManager>();
 
-                if (instance == null)
-                {
-                    GameObject container = new GameObject("EffectManager");
-                    instance = container.AddComponent<EffectManager>();
-                }
-            }
+            if (_instance != null) 
+                return _instance;
+            
+            var container = new GameObject("EffectManager");
+            _instance = container.AddComponent<EffectManager>();
 
-            return instance;
+            return _instance;
         }
     }
     #endregion
@@ -44,7 +43,7 @@ public class EffectManager : MonoBehaviour
     {
         for (var i = 0; i < initCount; i++)
         {
-            pool.Enqueue(CreateNewObject());
+            _pool.Enqueue(CreateNewObject());
         }
     }
 
@@ -58,9 +57,9 @@ public class EffectManager : MonoBehaviour
 
     public ClickEffect GetObject()
     {
-        if (Instance.pool.Count > 0)
+        if (Instance._pool.Count > 0)
         {
-            var obj = Instance.pool.Dequeue();
+            var obj = Instance._pool.Dequeue();
             obj.transform.SetParent(null);
             obj.gameObject.SetActive(true);
             return obj;
@@ -76,10 +75,10 @@ public class EffectManager : MonoBehaviour
         }
     }
 
-    public static void ReturnObject(ClickEffect obj)
+    public void ReturnObject(ClickEffect obj)
     {
         obj.gameObject.SetActive(false);
         obj.transform.SetParent(Instance.transform);
-        Instance.pool.Enqueue(obj);
+        Instance._pool.Enqueue(obj);
     }
 }

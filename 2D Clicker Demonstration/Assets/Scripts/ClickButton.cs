@@ -23,6 +23,16 @@ public class ClickButton : MonoBehaviour
         newEffect.Initialize();
         Vector2 temp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         newEffect.transform.position = temp;
+
+        Vector3 pos = Vector2.right * (UIManager.Instance.goldDisplayTextInLowerPanel.preferredWidth) +
+                      Vector2.up * (UIManager.Instance.goldDisplayTextInLowerPanel.preferredHeight + 4f);
+        
+        var newInstant = UIManager.Instance.GenerateInstantText("+"+ DataController.GoldPerClick, 
+            UIManager.Instance.goldDisplayTextInLowerPanel.transform, pos
+             , 0.3f, TextAnchor.UpperRight);
+        // Prefab의 Text의 할당 사이즈가 반드시 가로 세로 0이어야 상하좌우 정렬에 따라 어긋나지 않음
+
+        // 애니메이션 추가
     }
 
     public void OnClick()

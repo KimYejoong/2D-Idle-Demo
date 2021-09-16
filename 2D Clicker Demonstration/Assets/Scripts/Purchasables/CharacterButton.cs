@@ -68,10 +68,10 @@ namespace Purchasables
             {
                 if (isPurchased)
                 {
-                    DataController.Gold += goldPerSec * DataController.Instance.GetGoldMultiplier();                
+                    DataController.Gold += goldPerSec * DataController.Instance.GetGoldMultiplier();
                 }
 
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(1f);
             }
         }
 
