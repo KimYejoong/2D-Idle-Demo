@@ -10,7 +10,7 @@ public class EffectManager : MonoBehaviour
     [SerializeField]
     private int poolSize;
 
-    Queue<ClickEffect> pool = new Queue<ClickEffect>();
+    readonly Queue<ClickEffect> pool = new Queue<ClickEffect>();
 
     #region Singleton
     private static EffectManager instance;
@@ -42,7 +42,7 @@ public class EffectManager : MonoBehaviour
 
     private void Initialize(int initCount)
     {
-        for (int i = 0; i < initCount; i++)
+        for (var i = 0; i < initCount; i++)
         {
             pool.Enqueue(CreateNewObject());
         }
@@ -76,7 +76,7 @@ public class EffectManager : MonoBehaviour
         }
     }
 
-    public void ReturnObject(ClickEffect obj)
+    public static void ReturnObject(ClickEffect obj)
     {
         obj.gameObject.SetActive(false);
         obj.transform.SetParent(Instance.transform);

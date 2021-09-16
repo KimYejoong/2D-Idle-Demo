@@ -4,25 +4,23 @@ using UnityEngine;
 
 public class ClickEffect : MonoBehaviour
 {
-    private ParticleSystem ps;
+    private ParticleSystem _ps;
 
     private void Awake()
     {
-        ps = GetComponent<ParticleSystem>();        
+        _ps = GetComponent<ParticleSystem>();        
     }
 
     public void Initialize()
     {
-        ps.time = 0f; // 이펙트 처음으로 초기화
-        ps.Play();
+        _ps.time = 0f; // 이펙트 처음으로 초기화
+        _ps.Play();
         StartCoroutine(AutoReturn());        
     }
 
     private IEnumerator AutoReturn()
     {
-        yield return new WaitForSeconds(ps.main.duration);        
-        EffectManager.Instance.ReturnObject(this);
+        yield return new WaitForSeconds(_ps.main.duration);        
+        EffectManager.ReturnObject(this);
     }
-
-
 }

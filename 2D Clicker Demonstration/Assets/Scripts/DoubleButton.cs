@@ -6,6 +6,6 @@ public class DoubleButton : MonoBehaviour
 {
     public void OnClick()
     {
-        DataController.Instance.gold *= 16;
+        DataController.Gold *= 16;
     }
 }

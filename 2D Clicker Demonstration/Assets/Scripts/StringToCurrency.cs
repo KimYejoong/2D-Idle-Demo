@@ -5,9 +5,9 @@ using System.Numerics;
 
 public static partial class StringToCurrency
 {
-    const string Zero = "0";
+    private const string Zero = "0";
 
-    static readonly string[] currencyUnits = new string[]
+    static readonly string[] CurrencyUnits = new string[]
     {
         "",
          "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
@@ -60,9 +60,9 @@ public static partial class StringToCurrency
             showNumber = temp.ToString("F").Replace(".00", "");
         }
 
-        unitString = currencyUnits[quotient];
+        unitString = CurrencyUnits[quotient];
 
-        return string.Format("{0}{1}{2}", significant, showNumber, unitString);
+        return $"{significant}{showNumber}{unitString}";
     }
 }
 
