@@ -4,20 +4,16 @@ using UnityEngine;
 
 public class ClickButton : MonoBehaviour
 {
+    public GameObject effect;
+
     public void OnClick()
     {        
         DataController.Instance.gold += DataController.Instance.goldPerClick;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
         
-    }
+        var effect = EffectManager.Instance.GetObject();
+        effect.Initialize();
+        Vector2 temp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        effect.transform.position = temp;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

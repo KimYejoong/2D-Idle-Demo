@@ -60,8 +60,10 @@
     <Compile Include="Assets\Scripts\BuffDisplayText.cs" />
     <Compile Include="Assets\Scripts\CharacterButton.cs" />
     <Compile Include="Assets\Scripts\ClickButton.cs" />
+    <Compile Include="Assets\Scripts\ClickEffect.cs" />
     <Compile Include="Assets\Scripts\DataController.cs" />
     <Compile Include="Assets\Scripts\DoubleButton.cs" />
+    <Compile Include="Assets\Scripts\EffectManager.cs" />
     <Compile Include="Assets\Scripts\ListPanelController.cs" />
     <Compile Include="Assets\Scripts\ListPanelSortButton.cs" />
     <Compile Include="Assets\Scripts\LowerMenu.cs" />

@@ -36,8 +36,8 @@ public class LowerMenu : MonoBehaviour
 
     public void Open()
     {
-        topLeftDisplay.Open();
-        // animator.ResetTrigger("Close");
+        topLeftDisplay.Open();        
+
         animator.Play("Open");
 
         CloseAllTabs();
@@ -82,7 +82,6 @@ public class LowerMenu : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         animator.ResetTrigger("Close");        
 
-        menuButton.SetActive(true);
-        // lowerMenuButton.gameObject.SetActive(false);
+        menuButton.SetActive(true);        
     }
 }
