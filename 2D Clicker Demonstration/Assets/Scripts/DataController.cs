@@ -35,6 +35,7 @@ public class DataController : MonoBehaviour
 
     private CharacterButton[] _characterButtons; // 부재시 쌓이는 재화 체크 시 자동 재화 생산 담당하는 캐릭터 버튼을 순회하기 위해 배열로 관리
     private SkillButton[] _skillButtons;
+    private DateTime _lastPlayDateWhenStart;
 
     private DateTime GetLastPlayDate()
     {
@@ -44,7 +45,7 @@ public class DataController : MonoBehaviour
 
         var timeBinaryInString = PlayerPrefs.GetString("Time");
         var timeBinaryInLong = Convert.ToInt64(timeBinaryInString);
-
+        
         return DateTime.FromBinary(timeBinaryInLong);
     }
 
@@ -70,13 +71,23 @@ public class DataController : MonoBehaviour
             var tempGold = PlayerPrefs.GetString("Gold");
             return double.Parse(tempGold);
         }
-        set => PlayerPrefs.SetString("Gold", value.ToString(CultureInfo.InvariantCulture));
+        set => PlayerPrefs.SetString("Gold", value.ToString());
     }
     
-    public static int GoldPerClick
+    public double GoldPerClick
     {
-        get => PlayerPrefs.GetInt("GoldPerClick", 1);
-        set => PlayerPrefs.SetInt("GoldPerClick", value);
+        get
+        {
+            if (!PlayerPrefs.HasKey("GoldPerClick"))
+            {
+                return 1;
+            }
+
+            var tempGoldPerSec = PlayerPrefs.GetString("GoldPerClick");
+            return double.Parse(tempGoldPerSec);
+        }
+
+        set => PlayerPrefs.SetString("GoldPerClick", value.ToString());
     }
 
     public int TimeAfterLastPlay
@@ -84,24 +95,29 @@ public class DataController : MonoBehaviour
         get
         {
             var currentTime = DateTime.Now;
-            var lastPlayDate = GetLastPlayDate();
 
-            return (int)currentTime.Subtract(lastPlayDate).TotalSeconds; // 현재 접속 시점 ~ 최종 접속 시점의 시간 간격(초)
+            return (int)currentTime.Subtract(_lastPlayDateWhenStart).TotalSeconds; // 현재 접속 시점 ~ 최종 접속 시점의 시간 간격(초)
         }
     }
+
+    private double _goldEarnedDuringIdleTime;
 
 
     private void Awake()
     {        
         _characterButtons = FindObjectsOfType<CharacterButton>();
         _skillButtons = FindObjectsOfType<SkillButton>();
+        _goldEarnedDuringIdleTime = 0;
+        _lastPlayDateWhenStart = GetLastPlayDate();
+        // GetLasPlayDate()는 비상 종료를 위해 게임 시작 후 UpdateLastPlayDate()에 의해 기록이 갱신되기 시작하므로, 최종 접속 시각은 Awake에서 한번 받아놓고 계속 씀
     }
 
     private void Start()
     {
-        GetGoldMultiplierDuringNotPlaying(); // Awake에서 각 스킬 버튼의 remaining 등의 정보를 로드한 후, DataController의 Start에서 미접속 기간 동안 획득한 재화를 처리하면서 remaining 차감 처리함
+        CalculateGoldEarnedDuringIdle(); // Awake에서 각 스킬 버튼의 remaining 등의 정보를 로드한 후, DataController의 Start에서 미접속 기간 동안 획득한 재화의 양을 계산하면서 remaining 차감 처리함
+        // 실제 재화 추가는 AddGoldEarnedFromIdle()을 통해 이뤄지고, 게임 시작 시 띄우는 별도의 팝업창을 통해 획득할 수 있도록 GetIdleBonusButton에서 호출함
         
-        InvokeRepeating(nameof(UpdateLastPlayDate), 0f, 5f); // 매 5초마다 최종 접속 시각 기록하도록 함
+        InvokeRepeating(nameof(UpdateLastPlayDate), 0f, 5f); // 예기치 못한 종료를 대비하여 매 5초마다 최종 접속 시각 기록하도록 함
     }
 
     public static void LoadUpgradeButton(UpgradeButton upgradeButton)
@@ -125,7 +141,15 @@ public class DataController : MonoBehaviour
         var key = characterButton.characterName;
         characterButton.level = PlayerPrefs.GetInt(key + "_level", 0);
         characterButton.currentCost = PlayerPrefs.GetInt(key + "_cost", characterButton.initialCurrentCost);
-        characterButton.goldPerSec = PlayerPrefs.GetInt(key + "_goldPerSec");
+        
+        if (!PlayerPrefs.HasKey(key + "_goldPerSec"))
+            characterButton.goldPerSec = 0;
+        else
+        {
+            var tempGoldPerSec = PlayerPrefs.GetString(key + "_goldPerSec");
+            characterButton.goldPerSec = double.Parse(tempGoldPerSec);
+        }
+
         characterButton.isPurchased = (PlayerPrefs.GetInt(key + "_isPurchased") == 1);        
     }
 
@@ -134,7 +158,8 @@ public class DataController : MonoBehaviour
         var key = characterButton.characterName;
         PlayerPrefs.SetInt(key + "_level", characterButton.level);
         PlayerPrefs.SetInt(key + "_cost", characterButton.currentCost);
-        PlayerPrefs.SetInt(key + "_goldPerSec", characterButton.goldPerSec);
+        
+        PlayerPrefs.SetString(key + "_goldPerSec", characterButton.goldPerSec.ToString());
 
         PlayerPrefs.SetInt(key + "_isPurchased", characterButton.isPurchased ? 1 : 0);
     }
@@ -166,15 +191,14 @@ public class DataController : MonoBehaviour
     }
 
 
-    public int GetGoldPerSecond()
+    public double GetGoldPerSecond()
     {
-        var goldPerSec = 0;
+        double goldPerSec = 0;
 
         for (int i = 0; i < _characterButtons.Length; i++)
         {
             if (_characterButtons[i].isPurchased) // 구매한 아이템일 경우에만 계산에 고려함
                 goldPerSec += _characterButtons[i].goldPerSec;
-
         }
 
         return goldPerSec;
@@ -193,7 +217,7 @@ public class DataController : MonoBehaviour
         return goldMultiplier;
     }
 
-    private void GetGoldMultiplierDuringNotPlaying()
+    private void CalculateGoldEarnedDuringIdle()
     {
         var goldMultipliers = new List<SkillData>();
 
@@ -212,12 +236,12 @@ public class DataController : MonoBehaviour
 
         if (goldMultipliers.Count == 0) // 적용되는 스킬 버프가 따로 없었으면 그냥 지난 시간만큼 바로 처리하고,
         {
-            Gold += GetGoldPerSecond() * TimeAfterLastPlay;
+            _goldEarnedDuringIdleTime += GetGoldPerSecond() * TimeAfterLastPlay;
         }
         else // 스킬 버프 적용 중에 종료했다 다시 켠 경우 버프를 고려하여 획득 재화를 계산함
         {               
             var prevRemaining = 0f;
-
+            
             goldMultipliers = goldMultipliers.OrderBy(skill => skill.remaining).ToList(); // remaining 오름차순으로 정렬하여 버프가 가장 많이 겹치는 구간 ~ 적게 겹치는 구간 순으로 처리
 
             for (var i = 0; i < goldMultipliers.Count; i++)
@@ -229,15 +253,31 @@ public class DataController : MonoBehaviour
                 {
                     tempMultiplier *= goldMultipliers[j].multiplier; // 이전 구간을 제외하고(j = i ~ Count), 적용 가능한 버프 계수를 누적해서 곱해줌
                 }
-
+                
                 prevRemaining = tempRemaining;
                 tempRemaining = Mathf.Min(goldMultipliers[i].remaining, TimeAfterLastPlay); // 게임을 껐다 켠지 얼마 안돼서 잔여 시간이 더 긴 경우, 종료 기간분만큼만 계산해줌. 단, 실제 지속 시간은 이미 위에서 처리해줬음
 
-                //Debug.Log("Idle time[" + i + "] = " + tempRemaining + ", tempMultiplier = " + tempMultiplier);
-                //Debug.Log("Idle Bonus = " + GetGoldPerSecond() * tempMultiplier * tempRemaining);
-                Gold += GetGoldPerSecond() * tempMultiplier * tempRemaining;
+                _goldEarnedDuringIdleTime += GetGoldPerSecond() * tempMultiplier * tempRemaining;
+                //Debug.Log("Idle Bonus amplified by buff = " + GetGoldPerSecond() * tempMultiplier * tempRemaining);
             }
+
+            _goldEarnedDuringIdleTime += GetGoldPerSecond() * Mathf.Max(TimeAfterLastPlay - goldMultipliers[goldMultipliers.Count - 1].remaining, 0);
+            //Debug.Log("Idle Bonus without buff = " + GetGoldPerSecond() * Mathf.Max(TimeAfterLastPlay - goldMultipliers[goldMultipliers.Count - 1].remaining, 0));
+            //Debug.Log("Total Idle time = " + TimeAfterLastPlay);
+            //Debug.Log("Idle time without buff = " + Mathf.Max(TimeAfterLastPlay - goldMultipliers[goldMultipliers.Count - 1].remaining, 0));
+            // 스킬 버프 적용 시간이 끝난 뒤로, 남아있는 유휴 시간만큼 재화 획득 마저 처리
         }
+    }
+
+    public void AddGoldEarnedFromIdle()
+    {
+        Gold += _goldEarnedDuringIdleTime;
+        _goldEarnedDuringIdleTime = 0;
+    }
+
+    public double GetGoldEarnedFromIdle()
+    {
+        return _goldEarnedDuringIdleTime;
     }
 
     private class SkillData

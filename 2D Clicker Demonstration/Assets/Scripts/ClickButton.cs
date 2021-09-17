@@ -17,18 +17,24 @@ public class ClickButton : MonoBehaviour
 
     private void OnEventClick()
     {
-        DataController.Gold += DataController.GoldPerClick;
+        DataController.Gold += DataController.Instance.GoldPerClick;
 
         var newEffect = EffectManager.Instance.GetObject();
         newEffect.Initialize();
         Vector2 temp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         newEffect.transform.position = temp;
 
-        Vector3 pos = Vector2.right * (UIManager.Instance.goldDisplayTextInLowerPanel.preferredWidth) +
-                      Vector2.up * (UIManager.Instance.goldDisplayTextInLowerPanel.preferredHeight + 4f);
+        var newInstantText = UIManager.Instance.GenerateInstantText("+"+ DataController.Instance.GoldPerClick, 
+            UIManager.Instance.goldDisplayText.transform, 
+            Vector2.right * (UIManager.Instance.goldDisplayText.preferredWidth) + Vector2.up * (UIManager.Instance.goldDisplayText.preferredHeight + 4f)
+            , 0.3f, TextAnchor.UpperRight, true);
+
+        newInstantText._myText.fontSize = UIManager.Instance.goldDisplayText.fontSize;
+        newInstantText._myText.color = UIManager.Instance.goldDisplayText.color;
         
-        var newInstant = UIManager.Instance.GenerateInstantText("+"+ DataController.GoldPerClick, 
-            UIManager.Instance.goldDisplayTextInLowerPanel.transform, pos
+        UIManager.Instance.GenerateInstantText("+"+ DataController.Instance.GoldPerClick, 
+            UIManager.Instance.goldDisplayTextInLowerPanel.transform, 
+            Vector2.right * (UIManager.Instance.goldDisplayTextInLowerPanel.preferredWidth) + Vector2.up * (UIManager.Instance.goldDisplayTextInLowerPanel.preferredHeight + 4f)
              , 0.3f, TextAnchor.UpperRight);
         // Prefab의 Text의 할당 사이즈가 반드시 가로 세로 0이어야 상하좌우 정렬에 따라 어긋나지 않음
 
@@ -39,7 +45,7 @@ public class ClickButton : MonoBehaviour
     {
         if (m_fNextAction != 0f && Time.unscaledTime < m_fNextAction) // 초당 클릭 가능 횟수에 상한선 걸어둠
         {
-            // Debug.Log("[Skip Click Event] Max Action Per Second");
+            // Debug.Log("초당 입력 제한 도달");
             return;
         }
 

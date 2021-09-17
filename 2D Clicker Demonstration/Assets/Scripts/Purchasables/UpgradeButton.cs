@@ -43,7 +43,7 @@ public class UpgradeButton : MonoBehaviour, Purchasable
         
         DataController.Gold -= currentCost;
         level++;
-        DataController.GoldPerClick += goldByUpgrade;
+        DataController.Instance.GoldPerClick += goldByUpgrade;
 
         UpdateUpgrade();
         UpdateUI();

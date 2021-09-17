@@ -33,51 +33,78 @@ public class UIManager : MonoBehaviour
     public Text goldPerClickDisplayText;
     public Text goldPerSecDisplayText;
     public Text goldDisplayTextInLowerPanel;
+    public GameObject idleBonusPopup;
 
     private void Start()
     {
-        StartCoroutine(UpdateInstantText());
+        StartCoroutine(UpdateInstantTexts());
+        StartCoroutine(TryShowIdleEarning());
     }
 
-    private IEnumerator UpdateInstantText()
+    private IEnumerator TryShowIdleEarning()
+    {
+        yield return new WaitForEndOfFrame();
+        if (DataController.Instance.GetGoldEarnedFromIdle() > 0)
+        {
+            idleBonusPopup.SetActive(true);
+        }
+
+    }
+
+    private void Update()
+    {
+        goldDisplayText.text = "GOLD : " + DataController.Gold.ToCurrencyString();
+        goldDisplayTextInLowerPanel.text = "GOLD : " + DataController.Gold.ToCurrencyString();
+    }
+
+    private IEnumerator UpdateInstantTexts()
     {
         while (true)
         {
             yield return new WaitForSeconds(1f);
+
+            if (DataController.Instance.GetGoldPerSecond() <= 0)
+                continue;
             
-            goldDisplayText.text = "GOLD : " + DataController.Gold.ToCurrencyString();
-            goldPerClickDisplayText.text = "GOLD PER CLICK: " + DataController.GoldPerClick;
-            goldPerSecDisplayText.text = "GOLD PER SECOND : " + DataController.Instance.GetGoldPerSecond();
+            // 좌하단에 재화 실시간 획득량 표시
+            
+            var goldText = GenerateInstantText("+" + DataController.Instance.GetGoldPerSecond() * DataController.Instance.GetGoldMultiplier(),
+                goldDisplayText.transform,
+                Vector2.right * (goldDisplayText.preferredWidth + 4f), 0.5f, TextAnchor.UpperLeft, true);
+            goldText._myText.fontSize = goldDisplayText.fontSize;
+            goldText._myText.color = goldDisplayText.color;
 
-            goldDisplayTextInLowerPanel.text = "GOLD : " + DataController.Gold.ToCurrencyString();
-
-            if (DataController.Instance.GetGoldPerSecond() > 0)
-            {
-                GenerateInstantText("+" + DataController.Instance.GetGoldPerSecond() *
-                    DataController.Instance.GetGoldMultiplier(),
-                    goldDisplayTextInLowerPanel.transform,
-                    Vector2.right * (goldDisplayTextInLowerPanel.preferredWidth + 4f), 0.5f);
-            }
+            // 하단 메뉴 띄웠을 때 재화 실시간 획득량 표시
+            GenerateInstantText("+" + DataController.Instance.GetGoldPerSecond() *
+                DataController.Instance.GetGoldMultiplier(),
+                goldDisplayTextInLowerPanel.transform,
+                Vector2.right * (goldDisplayTextInLowerPanel.preferredWidth + 4f), 0.5f);
         }
     }
 
     
-    [SerializeField]
-    private GameObject instantText;
 
-    [SerializeField]
-    private int poolSize;
 
-    public InstantText GenerateInstantText(string content, Transform trans, Vector3 pos, float time, TextAnchor textAnchor = TextAnchor.UpperLeft)
+    public InstantText GenerateInstantText(string content, Transform trans, Vector3 pos, float time, TextAnchor textAnchor = TextAnchor.UpperLeft, bool outline = false)
     {
         var newInstantText = GetObject(); 
         newInstantText.transform.SetParent(trans);
         var handle = newInstantText.GetComponent<InstantText>();
         handle.Initialize(content, time, textAnchor);
         handle.transform.localPosition = pos;
+        handle._myText.GetComponent<Outline>().enabled = outline;
 
         return newInstantText;
     }
+
+    #region  Object Pooling
+
+    [SerializeField]
+    private GameObject instantText;
+
+    [SerializeField]
+    private int poolSize;
+    
 
     readonly Queue<InstantText> _pool = new Queue<InstantText>();
 
@@ -127,5 +154,7 @@ public class UIManager : MonoBehaviour
         obj.transform.SetParent(Instance.transform);
         Instance._pool.Enqueue(obj);
     }
+    
+    #endregion
 }
 

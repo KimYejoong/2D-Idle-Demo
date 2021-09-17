@@ -8,12 +8,17 @@ using UnityEngine.UI;
 
 public class InstantText : MonoBehaviour
 {
-    private Text _myText;
+    [HideInInspector]
+    public Text _myText;
     private float _lifetime;
+    private Color _originalColor;
+    private int _originalFontSize;
 
     private void Awake()
     {
         _myText = GetComponentInChildren<Text>();
+        _originalColor = _myText.color;
+        _originalFontSize = _myText.fontSize;
     }
 
     public void Initialize(string content, float lifetime, TextAnchor textAnchor)
@@ -21,6 +26,8 @@ public class InstantText : MonoBehaviour
         _lifetime = lifetime;
         _myText.text = content;
         _myText.alignment = textAnchor;
+        _myText.color = _originalColor;
+        _myText.fontSize = _originalFontSize;
         StartCoroutine(FadeOut());
     }
 

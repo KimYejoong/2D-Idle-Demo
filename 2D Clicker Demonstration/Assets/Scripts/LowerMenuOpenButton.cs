@@ -8,11 +8,11 @@ public class LowerMenuOpenButton : MonoBehaviour
     private LowerMenu lowerMenuPanel;
 
     [SerializeField]
-    private GameObject mainButtons;
+    private MainButtons mainButtons;
 
     public void OpenMenu()
     {
         lowerMenuPanel.Open();
-        mainButtons.SetActive(false);
+        mainButtons.Close();
     }
 }

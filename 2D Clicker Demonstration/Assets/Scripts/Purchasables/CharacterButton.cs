@@ -23,7 +23,7 @@ namespace Purchasables
         public int initialCurrentCost = 1;    
 
         [HideInInspector]
-        public int goldPerSec;
+        public double goldPerSec;
         public int initialGoldPerSec = 1;
 
         public float upgradePower = 1.05f;

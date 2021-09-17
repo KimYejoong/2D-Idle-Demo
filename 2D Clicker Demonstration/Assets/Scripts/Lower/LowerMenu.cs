@@ -5,7 +5,7 @@ using UnityEngine;
 public class LowerMenu : MonoBehaviour
 {
     [SerializeField]
-    private GameObject menuButton;
+    private MainButtons mainButtons;
 
     [SerializeField]
     private TopLeftDisplay topLeftDisplay;
@@ -72,6 +72,7 @@ public class LowerMenu : MonoBehaviour
 
     public void Close()
     {
+        
         topLeftDisplay.Close();
         StartCoroutine(CloseAfterDelay());
     }
@@ -82,6 +83,6 @@ public class LowerMenu : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         _animator.ResetTrigger("Close");        
 
-        menuButton.SetActive(true);        
+       mainButtons.Open();        
     }
 }

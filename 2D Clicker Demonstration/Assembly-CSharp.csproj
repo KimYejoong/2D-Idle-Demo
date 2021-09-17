@@ -55,12 +55,15 @@
      <Compile Include="Assets\Scripts\DataController.cs" />
      <Compile Include="Assets\Scripts\DoubleButton.cs" />
      <Compile Include="Assets\Scripts\EffectManager.cs" />
+     <Compile Include="Assets\Scripts\GetIdleBonusButton.cs" />
+     <Compile Include="Assets\Scripts\IdleBonusPopupController.cs" />
      <Compile Include="Assets\Scripts\InstantText.cs" />
      <Compile Include="Assets\Scripts\Lower\ListPanelController.cs" />
      <Compile Include="Assets\Scripts\Lower\ListPanelSortButton.cs" />
      <Compile Include="Assets\Scripts\Lower\LowerMenu.cs" />
      <Compile Include="Assets\Scripts\Lower\TabButton.cs" />
      <Compile Include="Assets\Scripts\LowerMenuOpenButton.cs" />
+     <Compile Include="Assets\Scripts\MainButtons.cs" />
      <Compile Include="Assets\Scripts\Purchasables\CharacterButton.cs" />
      <Compile Include="Assets\Scripts\Purchasables\Purchasable.cs" />
      <Compile Include="Assets\Scripts\Purchasables\SkillButton.cs" />
