@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
         StartCoroutine(TryShowIdleEarning());
     }
 
-    private IEnumerator TryShowIdleEarning()
+    private IEnumerator TryShowIdleEarning() // 게임 실행 시 유휴 시간 동안 획득한 재화 획득 팝업 표시, 정상 처리를 위해 프레임 마지막까지 대기 후 처리
     {
         yield return new WaitForEndOfFrame();
         if (DataController.Instance.GetGoldEarnedFromIdle() > 0)
@@ -66,17 +66,15 @@ public class UIManager : MonoBehaviour
             if (DataController.Instance.GetGoldPerSecond() <= 0)
                 continue;
             
-            // 좌하단에 재화 실시간 획득량 표시
-            
-            var goldText = GenerateInstantText("+" + DataController.Instance.GetGoldPerSecond() * DataController.Instance.GetGoldMultiplier(),
+            // 화면 좌하단에 재화 실시간 획득량 표시
+            var goldText = GenerateInstantText("+" + (DataController.Instance.GetGoldPerSecond() * DataController.Instance.GetGoldMultiplier()).ToCurrencyString(),
                 goldDisplayText.transform,
                 Vector2.right * (goldDisplayText.preferredWidth + 4f), 0.5f, TextAnchor.UpperLeft, true);
             goldText._myText.fontSize = goldDisplayText.fontSize;
             goldText._myText.color = goldDisplayText.color;
 
-            // 하단 메뉴 띄웠을 때 재화 실시간 획득량 표시
-            GenerateInstantText("+" + DataController.Instance.GetGoldPerSecond() *
-                DataController.Instance.GetGoldMultiplier(),
+            // 하단 메뉴 띄웠을 때 좌상단에 재화 실시간 획득량 표시
+            GenerateInstantText("+" + (DataController.Instance.GetGoldPerSecond() * DataController.Instance.GetGoldMultiplier()).ToCurrencyString(),
                 goldDisplayTextInLowerPanel.transform,
                 Vector2.right * (goldDisplayTextInLowerPanel.preferredWidth + 4f), 0.5f);
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -54,13 +55,13 @@ public class UpgradeButton : MonoBehaviour, Purchasable
 
     private void UpdateUpgrade()
     {
-        goldByUpgrade = initialGoldByUpgrade * (int)Mathf.Pow(upgradePower, level);
-        currentCost = initialCurrentCost * (int)Mathf.Pow(costPower, level);
+        goldByUpgrade = (double)initialGoldByUpgrade * (double)Math.Pow(upgradePower, level);
+        currentCost = (double)initialCurrentCost * (double)Math.Pow(costPower, level);
     }
 
     private void UpdateUI()
     {
-        upgradeDisplayText.text = upgradeName + "\nCost: " + currentCost + "\nLevel: " + level + "\nNext New GoldPerClick : " + goldByUpgrade;
+        upgradeDisplayText.text = upgradeName + "\nCost: " + currentCost.ToCurrencyString() + "\nLevel: " + level + "\nNext New GoldPerClick : " + goldByUpgrade.ToCurrencyString();
     }
 
     public double GetCost()

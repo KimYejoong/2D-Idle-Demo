@@ -75,6 +75,7 @@
      <Compile Include="Assets\Scripts\TopLeft\TabNameDisplay.cs" />
      <Compile Include="Assets\Scripts\TopLeft\TopLeftDisplay.cs" />
      <Compile Include="Assets\Scripts\UIManager.cs" />
+     <None Include="Assets\Shaders\Blur.shader" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Users/user/Documents/2D-Idle-Demo/2D Clicker Demonstration/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

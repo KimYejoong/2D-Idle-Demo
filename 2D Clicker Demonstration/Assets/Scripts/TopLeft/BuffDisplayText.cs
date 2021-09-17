@@ -32,7 +32,7 @@ namespace TopLeft
                 else
                     timeText = $"{min:00}" + " : " + $"{sec:00}";
 
-                displayText.text = skill.skillName + " : " + "지속 시간 동안 재화 획득량 " + skill.goldMultiplier + "배(" + timeText + ")";
+                displayText.text = skill.skillName + " : " + "지속 시간 동안 재화 획득량 " + $"{skill.goldMultiplier:0.00}" + "배(" + timeText + ")";
             }
             else
             {

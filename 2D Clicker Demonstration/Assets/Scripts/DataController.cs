@@ -75,17 +75,18 @@ public class DataController : MonoBehaviour
         set => PlayerPrefsExtended.SetDouble("GoldPerClick", value);
     }
 
+    public int maximumIdleTime = 6 * 3600; // 유휴 기간 보상 최대 누적 시간(초)
+    
     public int TimeAfterLastPlay
     {
         get
         {
             var currentTime = DateTime.Now;
-            return (int)currentTime.Subtract(_lastPlayDateWhenStart).TotalSeconds; // 현재 접속 시점 ~ 최종 접속 시점의 시간 간격(초)
+            return Mathf.Min(maximumIdleTime, (int)currentTime.Subtract(_lastPlayDateWhenStart).TotalSeconds); // 현재 접속 시점 ~ 최종 접속 시점의 시간 간격(초), 최대 6시간
         }
     }
 
     private double _goldEarnedDuringIdleTime;
-
 
     private void Awake()
     {        

@@ -402,6 +402,7 @@ MonoBehaviour:
   skillDisplayText: {fileID: 4392305731243477497}
   canvasGroup: {fileID: 7396060281945114902}
   slider: {fileID: 429769770018178748}
+  skillActivateButton: {fileID: 5610124982354904360}
   colorAvailable: {r: 0, g: 1, b: 0, a: 1}
   colorUnavailable: {r: 1, g: 0, b: 0, a: 1}
   colorImage: {fileID: 4163484574124556173}

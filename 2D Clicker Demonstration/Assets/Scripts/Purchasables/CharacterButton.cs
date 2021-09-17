@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,7 +51,7 @@ namespace Purchasables
         {
             if (!(DataController.Gold >= currentCost))
                 return;
-            
+
             isPurchased = true;
             DataController.Gold -= currentCost;
             level++;
@@ -77,18 +78,18 @@ namespace Purchasables
 
         private void UpdateCharacter()
         {
-            goldPerSec = goldPerSec + initialGoldPerSec * (int)Mathf.Pow(upgradePower, level);
-            currentCost = initialCurrentCost * (int)Mathf.Pow(costPower, level);
+            goldPerSec = goldPerSec + initialGoldPerSec * Math.Pow(upgradePower, level);
+            currentCost = initialCurrentCost * Math.Pow(costPower, level);
         }
 
         private void UpdateUI()
         {
-            characterDisplayText.text = characterName + "\nLevel: " + level + "\nCost : " + currentCost + "\nGold Per Second : " + goldPerSec;
+            characterDisplayText.text = characterName + "\nLevel: " + level + "\nCost : " + currentCost.ToCurrencyString() + "\nGold Per Second : " + goldPerSec.ToCurrencyString();
 
             //slider.minValue = 0;
             //slider.maxValue = currentCost;
 
-            slider.value = (float)(DataController.Gold / currentCost);
+            //slider.value = (float)(DataController.Gold / currentCost);
 
             canvasGroup.alpha = isPurchased ? 1.0f : 0.3f;
             colorImage.color = DataController.Gold >= currentCost ? colorAvailable : colorUnavailable;

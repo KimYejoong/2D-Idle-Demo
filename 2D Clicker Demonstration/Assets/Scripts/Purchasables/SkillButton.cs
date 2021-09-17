@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Purchasables;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class SkillButton : MonoBehaviour, Purchasable
     public Text skillDisplayText;
     public CanvasGroup canvasGroup;
     public Slider slider;
+    public Button skillActivateButton;
 
     public Color colorAvailable = Color.green;
     public Color colorUnavailable = Color.red;
@@ -99,20 +101,21 @@ public class SkillButton : MonoBehaviour, Purchasable
 
     public void UpdateSkill()
     {
-        goldMultiplier = initialGoldMultiplier * (int)Mathf.Pow(upgradePower, level);
-        currentCost = initialCurrentCost * (int)Mathf.Pow(costPower, level);
+        goldMultiplier = initialGoldMultiplier * Mathf.Pow(upgradePower, level);
+        currentCost = initialCurrentCost * Math.Pow(costPower, level);
     }
 
     private void UpdateUI()
     {
-        skillDisplayText.text = skillName + "\nLevel: " + level + "\nCost : " + currentCost + "\nGold Multiplier: " + goldMultiplier
-            + "\nCooldown(remaining/total) : " + cooldownRemaining + "/" + cooldownDuration + "\nDuration(remaining/total)" + remaining + "/" + duration;
+        skillDisplayText.text = skillName + "\nLevel: " + level + "\nCost : " + currentCost.ToCurrencyString() + "\nGold Multiplier: " + $"{goldMultiplier:0.00}" +
+                                "\nCooldown(remaining/total) : " + $"{cooldownRemaining:0}" + "/" + $"{cooldownDuration:0}" +
+                                "\nDuration(remaining/total)" + $"{remaining:0}" + "/" + $"{duration:0}";
         
 
         //slider.minValue = 0;
         //slider.maxValue = currentCost;
 
-        slider.value = (float)(DataController.Gold / currentCost);
+        //slider.value = (float)(DataController.Gold / currentCost);
 
         if (isPurchased)
             canvasGroup.alpha = 1.0f;
@@ -123,6 +126,8 @@ public class SkillButton : MonoBehaviour, Purchasable
             colorImage.color = colorAvailable;
         else
             colorImage.color = colorUnavailable;
+
+        skillActivateButton.interactable = !isActivated && !(cooldownRemaining > 0); // 스킬 사용 가능 시에만 활성화
 
     }
 

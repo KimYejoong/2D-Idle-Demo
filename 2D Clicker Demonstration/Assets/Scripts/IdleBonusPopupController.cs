@@ -9,21 +9,29 @@ public class IdleBonusPopupController : MonoBehaviour
     [SerializeField]
     private Text idleBonusDisplay;
 
+    private Animator _animator;
+
+    private void Awake()
+    {
+        _animator = GetComponentInChildren<Animator>();
+        //_animator.Play("Open", -1);
+    }
+
     void Start()
     {
-        var idleTime = DataController.Instance.TimeAfterLastPlay;
+        idleBonusDisplay.text = "자리를 비운 " +  GetHMSFormat(DataController.Instance.TimeAfterLastPlay) + " 동안 획득한 재화 : " +
+                              DataController.Instance.GetGoldEarnedFromIdle().ToCurrencyString() +
+        "\n보상은 최대 " + GetHMSFormat(DataController.Instance.maximumIdleTime) + "동안 누적됩니다.";
+    }
 
-        var hour = (int)(idleTime / 3600);
-        var min = (int)(idleTime - hour * 3600) / 60;
-        var sec = (int)(idleTime % 60);
+    private string GetHMSFormat(int time)
+    {
+        var Time = time;
 
-        string timeText;
-        if (hour > 0)
-            timeText = hour + "시간 " + min + "분 " + sec + "초";
-        else
-            timeText = min + "분 " + sec + "초";
+        var hour = (int)(Time / 3600);
+        var min = (int)(Time - hour * 3600) / 60;
+        var sec = (int)(Time % 60);
         
-        idleBonusDisplay.text = "자리를 비운 " +  timeText + " 동안 획득한 재화 : " +
-                                DataController.Instance.GetGoldEarnedFromIdle().ToCurrencyString();
+        return ((hour > 0) ? hour + "시간 " : "") + ((min > 0) ? min + "분 " : "") + ((sec > 0) ? sec + "초 " : "");         
     }
 }

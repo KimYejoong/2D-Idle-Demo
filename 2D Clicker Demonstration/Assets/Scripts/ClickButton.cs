@@ -24,7 +24,8 @@ public class ClickButton : MonoBehaviour
         Vector2 temp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         newEffect.transform.position = temp;
 
-        var newInstantText = UIManager.Instance.GenerateInstantText("+"+ DataController.Instance.GoldPerClick, 
+        // 클릭에 따른 재화 증가를 인스턴트 텍스트로 표시(화면 좌하단)
+        var newInstantText = UIManager.Instance.GenerateInstantText("+"+ DataController.Instance.GoldPerClick.ToCurrencyString(), 
             UIManager.Instance.goldDisplayText.transform, 
             Vector2.right * (UIManager.Instance.goldDisplayText.preferredWidth) + Vector2.up * (UIManager.Instance.goldDisplayText.preferredHeight + 4f)
             , 0.3f, TextAnchor.UpperRight, true);
@@ -32,7 +33,8 @@ public class ClickButton : MonoBehaviour
         newInstantText._myText.fontSize = UIManager.Instance.goldDisplayText.fontSize;
         newInstantText._myText.color = UIManager.Instance.goldDisplayText.color;
         
-        UIManager.Instance.GenerateInstantText("+"+ DataController.Instance.GoldPerClick, 
+        // 클릭에 따른 재화 증가를 인스턴트 텍스트로 표시(하단 메뉴 좌상단)
+        UIManager.Instance.GenerateInstantText("+"+ DataController.Instance.GoldPerClick.ToCurrencyString(), 
             UIManager.Instance.goldDisplayTextInLowerPanel.transform, 
             Vector2.right * (UIManager.Instance.goldDisplayTextInLowerPanel.preferredWidth) + Vector2.up * (UIManager.Instance.goldDisplayTextInLowerPanel.preferredHeight + 4f)
              , 0.3f, TextAnchor.UpperRight);
