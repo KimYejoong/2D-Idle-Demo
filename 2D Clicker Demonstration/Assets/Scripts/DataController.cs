@@ -33,10 +33,11 @@ public class DataController : MonoBehaviour
     }
     #endregion
 
-    private CharacterButton[] _characterButtons; // 부재시 쌓이는 재화 체크 시 자동 재화 생산 담당하는 캐릭터 버튼을 순회하기 위해 배열로 관리
-    private SkillButton[] _skillButtons;
+    private CharacterButton[] _characterButtons; // 종료 후 유휴 시간 동안 쌓이는 재화 체크 시 자동 재화 생산 담당하는 캐릭터 버튼을 순회하기 위해 배열로 관리
+    private SkillButton[] _skillButtons; // 마찬가지로  유휴 시간 중 스킬 버프가 적용될 수 있으므로 스킬 버튼을 순회하기 위해 배열로 관리
     private DateTime _lastPlayDateWhenStart;
 
+    #region 게임 종료 시점 기록 처리를 위한 메소드들
     private DateTime GetLastPlayDate()
     {
         if (!PlayerPrefs.HasKey("Time")) {
@@ -58,36 +59,20 @@ public class DataController : MonoBehaviour
     {
         UpdateLastPlayDate();
     }
+    #endregion
 
+    
+    // 재화
     public static double Gold
     {
-        get
-        {
-            if (!PlayerPrefs.HasKey("Gold"))
-            {
-                return 0;
-            }
-
-            var tempGold = PlayerPrefs.GetString("Gold");
-            return double.Parse(tempGold);
-        }
-        set => PlayerPrefs.SetString("Gold", value.ToString());
+        get => PlayerPrefsExtended.GetDouble("Gold", 0); 
+        set => PlayerPrefsExtended.SetDouble("Gold", value);
     }
     
     public double GoldPerClick
     {
-        get
-        {
-            if (!PlayerPrefs.HasKey("GoldPerClick"))
-            {
-                return 1;
-            }
-
-            var tempGoldPerSec = PlayerPrefs.GetString("GoldPerClick");
-            return double.Parse(tempGoldPerSec);
-        }
-
-        set => PlayerPrefs.SetString("GoldPerClick", value.ToString());
+        get => PlayerPrefsExtended.GetDouble(("GoldPerClick"), 1); // 클릭 시 획득 재화는 최소 1 이상이어야 하므로 기본값 1
+        set => PlayerPrefsExtended.SetDouble("GoldPerClick", value);
     }
 
     public int TimeAfterLastPlay
@@ -95,7 +80,6 @@ public class DataController : MonoBehaviour
         get
         {
             var currentTime = DateTime.Now;
-
             return (int)currentTime.Subtract(_lastPlayDateWhenStart).TotalSeconds; // 현재 접속 시점 ~ 최종 접속 시점의 시간 간격(초)
         }
     }
@@ -120,36 +104,29 @@ public class DataController : MonoBehaviour
         InvokeRepeating(nameof(UpdateLastPlayDate), 0f, 5f); // 예기치 못한 종료를 대비하여 매 5초마다 최종 접속 시각 기록하도록 함
     }
 
+    #region Purchasables Save & Data
     public static void LoadUpgradeButton(UpgradeButton upgradeButton)
     {
         var key = upgradeButton.upgradeName;
         upgradeButton.level = PlayerPrefs.GetInt(key + "_level", 1);
-        upgradeButton.goldByUpgrade = PlayerPrefs.GetInt(key + "_goldByUpgrade", upgradeButton.initialGoldByUpgrade);
-        upgradeButton.currentCost = PlayerPrefs.GetInt(key + "_cost", upgradeButton.initialCurrentCost);
+        upgradeButton.goldByUpgrade = PlayerPrefsExtended.GetDouble(key + "_goldByUpgrade", upgradeButton.initialGoldByUpgrade);
+        upgradeButton.currentCost = PlayerPrefsExtended.GetDouble(key + "_cost", upgradeButton.initialCurrentCost);
     }
 
     public static void SaveUpgradeButton(UpgradeButton upgradeButton)
     {
         var key = upgradeButton.upgradeName;
         PlayerPrefs.SetInt(key + "_level", upgradeButton.level);
-        PlayerPrefs.SetInt(key + "_goldByUpgrade", upgradeButton.goldByUpgrade);
-        PlayerPrefs.SetInt(key + "_cost", upgradeButton.currentCost);
+        PlayerPrefsExtended.SetDouble(key + "_goldByUpgrade", upgradeButton.goldByUpgrade);
+        PlayerPrefsExtended.SetDouble(key + "_cost", upgradeButton.currentCost);
     }
 
     public static void LoadCharacterButton(CharacterButton characterButton)
     {
         var key = characterButton.characterName;
         characterButton.level = PlayerPrefs.GetInt(key + "_level", 0);
-        characterButton.currentCost = PlayerPrefs.GetInt(key + "_cost", characterButton.initialCurrentCost);
-        
-        if (!PlayerPrefs.HasKey(key + "_goldPerSec"))
-            characterButton.goldPerSec = 0;
-        else
-        {
-            var tempGoldPerSec = PlayerPrefs.GetString(key + "_goldPerSec");
-            characterButton.goldPerSec = double.Parse(tempGoldPerSec);
-        }
-
+        characterButton.currentCost = PlayerPrefsExtended.GetDouble(key + "_cost", characterButton.initialCurrentCost);
+        characterButton.goldPerSec = PlayerPrefsExtended.GetDouble(key + "_goldPerSec");
         characterButton.isPurchased = (PlayerPrefs.GetInt(key + "_isPurchased") == 1);        
     }
 
@@ -157,10 +134,8 @@ public class DataController : MonoBehaviour
     {
         var key = characterButton.characterName;
         PlayerPrefs.SetInt(key + "_level", characterButton.level);
-        PlayerPrefs.SetInt(key + "_cost", characterButton.currentCost);
-        
-        PlayerPrefs.SetString(key + "_goldPerSec", characterButton.goldPerSec.ToString());
-
+        PlayerPrefsExtended.SetDouble(key + "_cost", characterButton.currentCost);
+        PlayerPrefsExtended.SetDouble(key + "_goldPerSec", characterButton.goldPerSec);
         PlayerPrefs.SetInt(key + "_isPurchased", characterButton.isPurchased ? 1 : 0);
     }
 
@@ -169,7 +144,7 @@ public class DataController : MonoBehaviour
     {
         var key = skillButton.skillName;
         skillButton.level = PlayerPrefs.GetInt(key + "_level", 0);
-        skillButton.currentCost = PlayerPrefs.GetInt(key + "_cost", skillButton.initialCurrentCost);
+        skillButton.currentCost = PlayerPrefsExtended.GetDouble(key + "_cost", skillButton.initialCurrentCost);
         skillButton.goldMultiplier = PlayerPrefs.GetFloat(key + "_goldMultiplier");
         skillButton.remaining = PlayerPrefs.GetFloat(key + "_remaining", 0);        
         skillButton.cooldownRemaining = PlayerPrefs.GetFloat(key + "_cooldownRemaining", 0);        
@@ -181,7 +156,7 @@ public class DataController : MonoBehaviour
     {
         var key = skillButton.skillName;
         PlayerPrefs.SetInt(key + "_level", skillButton.level);
-        PlayerPrefs.SetInt(key + "_cost", skillButton.currentCost);
+        PlayerPrefsExtended.SetDouble(key + "_cost", skillButton.currentCost);
         PlayerPrefs.SetFloat(key + "_goldMultiplier", skillButton.goldMultiplier);
         PlayerPrefs.SetFloat(key + "_remaining", skillButton.remaining);        
         PlayerPrefs.SetFloat(key + "_cooldownRemaining", skillButton.cooldownRemaining);
@@ -189,6 +164,7 @@ public class DataController : MonoBehaviour
         PlayerPrefs.SetInt(key + "_isPurchased", skillButton.isPurchased ? 1 : 0);
         PlayerPrefs.SetInt(key + "_isActivated", skillButton.isActivated ? 1 : 0);
     }
+    #endregion
 
 
     public double GetGoldPerSecond()
@@ -290,7 +266,5 @@ public class DataController : MonoBehaviour
             remaining = time;
             multiplier = multi;
         }
-    }      
-
-
+    }
 }

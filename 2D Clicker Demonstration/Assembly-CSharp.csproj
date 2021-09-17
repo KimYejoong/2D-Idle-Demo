@@ -64,6 +64,7 @@
      <Compile Include="Assets\Scripts\Lower\TabButton.cs" />
      <Compile Include="Assets\Scripts\LowerMenuOpenButton.cs" />
      <Compile Include="Assets\Scripts\MainButtons.cs" />
+     <Compile Include="Assets\Scripts\PlayerPrefsExtended.cs" />
      <Compile Include="Assets\Scripts\Purchasables\CharacterButton.cs" />
      <Compile Include="Assets\Scripts\Purchasables\Purchasable.cs" />
      <Compile Include="Assets\Scripts\Purchasables\SkillButton.cs" />

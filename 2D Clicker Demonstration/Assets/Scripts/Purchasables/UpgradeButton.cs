@@ -10,11 +10,11 @@ public class UpgradeButton : MonoBehaviour, Purchasable
     public string upgradeName;    
 
     [HideInInspector]
-    public int goldByUpgrade;
+    public double goldByUpgrade;
     public int initialGoldByUpgrade = 1;
 
     [HideInInspector]
-    public int currentCost = 1;
+    public double currentCost = 1;
     public int initialCurrentCost = 1;
 
     [HideInInspector]
@@ -63,7 +63,7 @@ public class UpgradeButton : MonoBehaviour, Purchasable
         upgradeDisplayText.text = upgradeName + "\nCost: " + currentCost + "\nLevel: " + level + "\nNext New GoldPerClick : " + goldByUpgrade;
     }
 
-    public int GetCost()
+    public double GetCost()
     {
         return currentCost;
     }

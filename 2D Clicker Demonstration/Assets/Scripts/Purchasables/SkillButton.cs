@@ -19,7 +19,7 @@ public class SkillButton : MonoBehaviour, Purchasable
     public int level;
 
     [HideInInspector]
-    public int currentCost;
+    public double currentCost;
     public int initialCurrentCost = 1;
 
     [HideInInspector]
@@ -153,7 +153,7 @@ public class SkillButton : MonoBehaviour, Purchasable
             isActivated = false;
     }
 
-    public int GetCost()
+    public double GetCost()
     {
         return currentCost;
     }

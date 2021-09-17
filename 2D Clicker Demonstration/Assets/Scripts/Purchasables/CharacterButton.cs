@@ -19,7 +19,7 @@ namespace Purchasables
         public int level;
 
         [HideInInspector]
-        public int currentCost;
+        public double currentCost;
         public int initialCurrentCost = 1;    
 
         [HideInInspector]
@@ -100,7 +100,7 @@ namespace Purchasables
             UpdateUI();
         }
 
-        public int GetCost()
+        public double GetCost()
         {
             return currentCost;
         }

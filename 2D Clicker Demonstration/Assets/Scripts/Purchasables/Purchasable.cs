@@ -1,5 +1,5 @@
 ﻿    public interface Purchasable
     {
-        int GetCost();
+        double GetCost();
     }
 
