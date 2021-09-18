@@ -89,7 +89,7 @@ namespace Purchasables
             //slider.minValue = 0;
             //slider.maxValue = currentCost;
 
-            //slider.value = (float)(DataController.Gold / currentCost);
+            slider.value = (float)(DataController.Gold / currentCost);
 
             canvasGroup.alpha = isPurchased ? 1.0f : 0.3f;
             colorImage.color = DataController.Gold >= currentCost ? colorAvailable : colorUnavailable;

@@ -115,7 +115,7 @@ public class SkillButton : MonoBehaviour, Purchasable
         //slider.minValue = 0;
         //slider.maxValue = currentCost;
 
-        //slider.value = (float)(DataController.Gold / currentCost);
+        slider.value = (float)(DataController.Gold / currentCost);
 
         if (isPurchased)
             canvasGroup.alpha = 1.0f;

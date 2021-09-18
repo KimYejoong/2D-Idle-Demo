@@ -50,6 +50,8 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\AchievementMenuOpenButton.cs" />
+     <Compile Include="Assets\Scripts\AchievementPanelController.cs" />
      <Compile Include="Assets\Scripts\ClickButton.cs" />
      <Compile Include="Assets\Scripts\ClickEffect.cs" />
      <Compile Include="Assets\Scripts\DataController.cs" />

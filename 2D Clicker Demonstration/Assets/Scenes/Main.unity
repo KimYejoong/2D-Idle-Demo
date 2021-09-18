@@ -240,8 +240,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9078489372684180934, guid: 5cd68c338fd1fcf4ab6ab78fb995766a,
         type: 3}
+      propertyPath: costPower
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078489372684180934, guid: 5cd68c338fd1fcf4ab6ab78fb995766a,
+        type: 3}
       propertyPath: upgradeName
       value: "\uD074\uB9AD \uD6A8\uC728 \uC99D\uAC00 B"
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078489372684180934, guid: 5cd68c338fd1fcf4ab6ab78fb995766a,
+        type: 3}
+      propertyPath: upgradePower
+      value: 1.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cd68c338fd1fcf4ab6ab78fb995766a, type: 3}
@@ -309,8 +319,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
         type: 3}
+      propertyPath: costPower
+      value: 4.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
+        type: 3}
       propertyPath: skillName
       value: "\uC2A4\uD0AC B"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
+        type: 3}
+      propertyPath: upgradePower
+      value: 1.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
+        type: 3}
+      propertyPath: initialCurrentCost
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
+        type: 3}
+      propertyPath: initialGoldMultiplier
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4392305732045070454, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
         type: 3}
@@ -463,8 +493,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8486967048642995971, guid: a67c030ba606cbd4497040c587c97cdf,
         type: 3}
+      propertyPath: costPower
+      value: 2.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8486967048642995971, guid: a67c030ba606cbd4497040c587c97cdf,
+        type: 3}
+      propertyPath: upgradePower
+      value: 1.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 8486967048642995971, guid: a67c030ba606cbd4497040c587c97cdf,
+        type: 3}
       propertyPath: characterName
       value: "\uCE90\uB9AD\uD130 C"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8486967048642995971, guid: a67c030ba606cbd4497040c587c97cdf,
+        type: 3}
+      propertyPath: initialGoldPerSec
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8486967048642995971, guid: a67c030ba606cbd4497040c587c97cdf,
+        type: 3}
+      propertyPath: initialCurrentCost
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8486967048642995972, guid: a67c030ba606cbd4497040c587c97cdf,
         type: 3}
@@ -952,8 +1002,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9078489372684180934, guid: 5cd68c338fd1fcf4ab6ab78fb995766a,
         type: 3}
+      propertyPath: costPower
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078489372684180934, guid: 5cd68c338fd1fcf4ab6ab78fb995766a,
+        type: 3}
       propertyPath: upgradeName
       value: "\uD074\uB9AD \uD6A8\uC728 \uC99D\uAC00 C"
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078489372684180934, guid: 5cd68c338fd1fcf4ab6ab78fb995766a,
+        type: 3}
+      propertyPath: upgradePower
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078489372684180934, guid: 5cd68c338fd1fcf4ab6ab78fb995766a,
+        type: 3}
+      propertyPath: initialCurrentCost
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078489372684180934, guid: 5cd68c338fd1fcf4ab6ab78fb995766a,
+        type: 3}
+      propertyPath: initialGoldByUpgrade
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cd68c338fd1fcf4ab6ab78fb995766a, type: 3}
@@ -2055,8 +2125,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
         type: 3}
+      propertyPath: duration
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
+        type: 3}
+      propertyPath: costPower
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
+        type: 3}
       propertyPath: skillName
       value: "\uC2A4\uD0AC D"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
+        type: 3}
+      propertyPath: upgradePower
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
+        type: 3}
+      propertyPath: cooldownDuration
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
+        type: 3}
+      propertyPath: initialCurrentCost
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
+        type: 3}
+      propertyPath: initialGoldMultiplier
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 4392305732045070454, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
         type: 3}
@@ -3708,8 +3808,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
         type: 3}
+      propertyPath: duration
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
+        type: 3}
+      propertyPath: costPower
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
+        type: 3}
       propertyPath: skillName
       value: "\uC2A4\uD0AC C"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
+        type: 3}
+      propertyPath: upgradePower
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
+        type: 3}
+      propertyPath: cooldownDuration
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
+        type: 3}
+      propertyPath: initialCurrentCost
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
+        type: 3}
+      propertyPath: initialGoldMultiplier
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4392305732045070454, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
         type: 3}
@@ -3940,8 +4070,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8486967048642995971, guid: a67c030ba606cbd4497040c587c97cdf,
         type: 3}
+      propertyPath: costPower
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8486967048642995971, guid: a67c030ba606cbd4497040c587c97cdf,
+        type: 3}
+      propertyPath: upgradePower
+      value: 1.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 8486967048642995971, guid: a67c030ba606cbd4497040c587c97cdf,
+        type: 3}
       propertyPath: characterName
       value: "\uCE90\uB9AD\uD130 B"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8486967048642995971, guid: a67c030ba606cbd4497040c587c97cdf,
+        type: 3}
+      propertyPath: initialGoldPerSec
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8486967048642995971, guid: a67c030ba606cbd4497040c587c97cdf,
+        type: 3}
+      propertyPath: initialCurrentCost
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8486967048642995972, guid: a67c030ba606cbd4497040c587c97cdf,
         type: 3}
@@ -4701,8 +4851,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9078489372684180934, guid: 5cd68c338fd1fcf4ab6ab78fb995766a,
         type: 3}
+      propertyPath: costPower
+      value: 1.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078489372684180934, guid: 5cd68c338fd1fcf4ab6ab78fb995766a,
+        type: 3}
       propertyPath: upgradeName
       value: "\uD074\uB9AD \uD6A8\uC728 \uC99D\uAC00 A"
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078489372684180934, guid: 5cd68c338fd1fcf4ab6ab78fb995766a,
+        type: 3}
+      propertyPath: upgradePower
+      value: 1.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cd68c338fd1fcf4ab6ab78fb995766a, type: 3}
@@ -4740,10 +4900,10 @@ RectTransform:
   m_Father: {fileID: 440900347}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 320, y: -460.00003}
-  m_SizeDelta: {x: 640, y: 306.6667}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1394727121
 MonoBehaviour:
@@ -4850,18 +5010,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1498413040}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1284291086}
-  m_Father: {fileID: 2113522538}
+  m_Father: {fileID: 2077864235}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 640, y: 48}
+  m_SizeDelta: {x: 640, y: 96}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1498413042
 MonoBehaviour:
@@ -5208,8 +5368,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9078489372684180934, guid: 5cd68c338fd1fcf4ab6ab78fb995766a,
         type: 3}
+      propertyPath: costPower
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078489372684180934, guid: 5cd68c338fd1fcf4ab6ab78fb995766a,
+        type: 3}
       propertyPath: upgradeName
       value: "\uD074\uB9AD \uD6A8\uC728 \uC99D\uAC00 D"
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078489372684180934, guid: 5cd68c338fd1fcf4ab6ab78fb995766a,
+        type: 3}
+      propertyPath: upgradePower
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078489372684180934, guid: 5cd68c338fd1fcf4ab6ab78fb995766a,
+        type: 3}
+      propertyPath: initialCurrentCost
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078489372684180934, guid: 5cd68c338fd1fcf4ab6ab78fb995766a,
+        type: 3}
+      propertyPath: initialGoldByUpgrade
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cd68c338fd1fcf4ab6ab78fb995766a, type: 3}
@@ -5807,8 +5987,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8486967048642995971, guid: a67c030ba606cbd4497040c587c97cdf,
         type: 3}
+      propertyPath: costPower
+      value: 4.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8486967048642995971, guid: a67c030ba606cbd4497040c587c97cdf,
+        type: 3}
+      propertyPath: upgradePower
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8486967048642995971, guid: a67c030ba606cbd4497040c587c97cdf,
+        type: 3}
       propertyPath: characterName
       value: "\uCE90\uB9AD\uD130 D"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8486967048642995971, guid: a67c030ba606cbd4497040c587c97cdf,
+        type: 3}
+      propertyPath: initialGoldPerSec
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8486967048642995971, guid: a67c030ba606cbd4497040c587c97cdf,
+        type: 3}
+      propertyPath: initialCurrentCost
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8486967048642995972, guid: a67c030ba606cbd4497040c587c97cdf,
         type: 3}
@@ -6004,12 +6204,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1844139038}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1206459557}
-  m_Father: {fileID: 2113522538}
+  m_Father: {fileID: 2077864235}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6118,10 +6318,10 @@ RectTransform:
   m_Father: {fileID: 440900347}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 320, y: -153.33334}
-  m_SizeDelta: {x: 640, y: 306.6667}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1850363544
 MonoBehaviour:
@@ -6228,18 +6428,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1904348678}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1951894427}
-  m_Father: {fileID: 2113522538}
+  m_Father: {fileID: 2077864235}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 48}
+  m_SizeDelta: {x: 0, y: 96}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1904348680
 MonoBehaviour:
@@ -6359,7 +6559,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1951894429}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2077864236}
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1951894429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6415,6 +6626,7 @@ GameObject:
   - component: {fileID: 2016578428}
   - component: {fileID: 2016578427}
   - component: {fileID: 2016578426}
+  - component: {fileID: 2016578429}
   m_Layer: 5
   m_Name: AchievementButton
   m_TagString: Untagged
@@ -6484,7 +6696,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2016578427}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2016578429}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2016578427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6522,6 +6745,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2016578424}
   m_CullTransparentMesh: 0
+--- !u!114 &2016578429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016578424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98129630d0f3818448e6c1531eee633a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AchievementPanel: {fileID: 2077864236}
 --- !u!1 &2060117367
 GameObject:
   m_ObjectHideFlags: 0
@@ -6680,6 +6916,117 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2060325589}
   m_CullTransparentMesh: 0
+--- !u!1 &2077864234
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2077864235}
+  - component: {fileID: 2077864239}
+  - component: {fileID: 2077864238}
+  - component: {fileID: 2077864237}
+  - component: {fileID: 2077864236}
+  m_Layer: 5
+  m_Name: MainPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2077864235
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2077864234}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1844139039}
+  - {fileID: 1904348679}
+  - {fileID: 1498413041}
+  m_Father: {fileID: 2113522538}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 640, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2077864236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2077864234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59835245bdff0874780b70d2289e7fcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentRect: {fileID: 2113522538}
+--- !u!95 &2077864237
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2077864234}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d70a3c2183d41c74181a1a5322831551, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2077864238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2077864234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &2077864239
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2077864234}
+  m_CullTransparentMesh: 0
 --- !u!1 &2113522537
 GameObject:
   m_ObjectHideFlags: 0
@@ -6692,12 +7039,12 @@ GameObject:
   - component: {fileID: 2113522540}
   - component: {fileID: 2113522539}
   m_Layer: 5
-  m_Name: AchievementPanel
+  m_Name: AchievementSection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2113522538
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6709,16 +7056,14 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1844139039}
-  - {fileID: 1904348679}
-  - {fileID: 1498413041}
+  - {fileID: 2077864235}
   m_Father: {fileID: 719783751}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 640, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2113522539
 MonoBehaviour:
@@ -6732,8 +7077,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.50266224, b: 0.36320752, a: 0.7372549}
+  m_Material: {fileID: 2100000, guid: d85d0f6e8c781d743b897ab0c9cf6655, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -6791,10 +7136,10 @@ RectTransform:
   m_Father: {fileID: 440900347}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 320, y: -766.66675}
-  m_SizeDelta: {x: 640, y: 306.6667}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2114971889
 MonoBehaviour:
@@ -7019,13 +7364,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
         type: 3}
+      propertyPath: duration
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
+        type: 3}
       propertyPath: skillName
       value: "\uC2A4\uD0AC A"
       objectReference: {fileID: 0}
     - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
         type: 3}
+      propertyPath: cooldownDuration
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
+        type: 3}
+      propertyPath: initialCurrentCost
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392305732045070453, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
+        type: 3}
       propertyPath: initialGoldMultiplier
-      value: 4
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4392305732045070454, guid: 6b69a3ebe8e609f4d912e76b30033a5c,
         type: 3}
