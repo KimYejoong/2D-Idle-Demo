@@ -13,8 +13,8 @@ public class AchievementPanelController : MonoBehaviour
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-        
-        _originalParentLocation = parentRect.anchoredPosition;
+
+        _originalParentLocation = Vector3.zero;
         parentRect.anchoredPosition = Vector2.down * 2000f;
     }
     

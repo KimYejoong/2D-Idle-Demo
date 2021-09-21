@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System;
 using System.Globalization;
 using System.Text;
-using System.Numerics;
+// using System.Numerics;
 using System.Linq;
 using Purchasables;
 
@@ -32,7 +33,7 @@ public class DataController : MonoBehaviour
         }
     }
     #endregion
-
+    
     private CharacterButton[] _characterButtons; // 종료 후 유휴 시간 동안 쌓이는 재화 체크 시 자동 재화 생산 담당하는 캐릭터 버튼을 순회하기 위해 배열로 관리
     private SkillButton[] _skillButtons; // 마찬가지로  유휴 시간 중 스킬 버프가 적용될 수 있으므로 스킬 버튼을 순회하기 위해 배열로 관리
     private DateTime _lastPlayDateWhenStart;
@@ -61,13 +62,24 @@ public class DataController : MonoBehaviour
     }
     #endregion
 
+    #region 도전과제를 위한 이벤트 선언
+    public static event Action<double> EarnGold; // 재화 획득 시 업적 달성 등 체크하기 위해 이벤트 사용
+    public static event Action<double> EarningGoldPerSec;
     
+    #endregion
+
     // 재화
     public static double Gold
     {
-        get => PlayerPrefsExtended.GetDouble("Gold", 0); 
-        set => PlayerPrefsExtended.SetDouble("Gold", value);
+        get => PlayerPrefsExtended.GetDouble("Gold", 0);
+        set
+        {
+            PlayerPrefsExtended.SetDouble("Gold", value);
+            EarnGold?.Invoke(value);
+        }
     }
+    
+    
     
     public double GoldPerClick
     {
@@ -177,6 +189,8 @@ public class DataController : MonoBehaviour
             if (_characterButtons[i].isPurchased) // 구매한 아이템일 경우에만 계산에 고려함
                 goldPerSec += _characterButtons[i].goldPerSec;
         }
+        
+        EarningGoldPerSec?.Invoke(goldPerSec); // 도전과제 달성 여부를 체크하기 위해 액션 호출
 
         return goldPerSec;
     }

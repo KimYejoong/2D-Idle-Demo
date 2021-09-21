@@ -76,6 +76,7 @@ public class BuffDisplayManager : MonoBehaviour
         newBuffDisplay.transform.position = transform.position + Vector3.down * (newBuffDisplay.displayText.preferredHeight + spacing) * list.Count;
 
         list.Add(newBuffDisplay);
+        SortBuffDisplay();
     }
 
     public void UpdateBuffDisplayList(BuffDisplayText buffDisplay)

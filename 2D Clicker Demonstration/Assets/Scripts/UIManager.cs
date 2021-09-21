@@ -54,6 +54,8 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         goldDisplayText.text = "GOLD : " + DataController.Gold.ToCurrencyString();
+        goldPerClickDisplayText.text = "GOLD PER CLICK : " + DataController.Instance.GoldPerClick.ToCurrencyString();
+        goldPerSecDisplayText.text = "GOLD PER SEC : " + DataController.Instance.GetGoldPerSecond().ToCurrencyString();
         goldDisplayTextInLowerPanel.text = "GOLD : " + DataController.Gold.ToCurrencyString();
     }
 

@@ -19,7 +19,7 @@ public class IdleBonusPopupController : MonoBehaviour
 
     void Start()
     {
-        idleBonusDisplay.text = "자리를 비운 " +  GetHMSFormat(DataController.Instance.TimeAfterLastPlay) + " 동안 획득한 재화 : " +
+        idleBonusDisplay.text = "자리를 비운 " +  GetHMSFormat(DataController.Instance.TimeAfterLastPlay) + "동안 획득한 재화 : " +
                               DataController.Instance.GetGoldEarnedFromIdle().ToCurrencyString() +
         "\n보상은 최대 " + GetHMSFormat(DataController.Instance.maximumIdleTime) + "동안 누적됩니다.";
     }
