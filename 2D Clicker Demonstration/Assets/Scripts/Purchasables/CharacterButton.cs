@@ -84,7 +84,7 @@ namespace Purchasables
 
         private void UpdateUI()
         {
-            characterDisplayText.text = characterName + "\nLevel: " + level + "\nCost : " + currentCost.ToCurrencyString() + "\nGold Per Second : " + goldPerSec.ToCurrencyString();
+            characterDisplayText.text = characterName + "\n레벨: " + level + "\n가격 : " + currentCost.ToCurrencyString() + "\n초당 골드 획득 : " + goldPerSec.ToCurrencyString();
 
             //slider.minValue = 0;
             //slider.maxValue = currentCost;

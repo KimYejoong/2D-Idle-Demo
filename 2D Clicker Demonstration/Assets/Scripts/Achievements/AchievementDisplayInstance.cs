@@ -25,7 +25,7 @@ public class AchievementDisplayInstance : MonoBehaviour
         _myAchievement = achievement;
         _textTitle.text = _myAchievement.GetName();
         _textDescription.text = _myAchievement.GetDescription();
-        _progressPercent = (float)(_myAchievement.GetProgress() / _myAchievement.GetGoal());
+        _progressPercent = _myAchievement.GetProgressInPercent();
         _unlocked = _myAchievement.GetUnlocked();
 
         _myAchievement.ChangeInProgress += UpdateUI;

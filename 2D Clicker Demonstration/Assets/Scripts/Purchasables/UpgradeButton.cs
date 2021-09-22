@@ -61,7 +61,7 @@ public class UpgradeButton : MonoBehaviour, Purchasable
 
     private void UpdateUI()
     {
-        upgradeDisplayText.text = upgradeName + "\nCost: " + currentCost.ToCurrencyString() + "\nLevel: " + level + "\nNext New GoldPerClick : " + goldByUpgrade.ToCurrencyString();
+        upgradeDisplayText.text = upgradeName + "\n가격: " + currentCost.ToCurrencyString() + "\n레벨: " + level + "\n클릭 당 골드 획득 : " + goldByUpgrade.ToCurrencyString();
     }
 
     public double GetCost()

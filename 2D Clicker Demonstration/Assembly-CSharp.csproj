@@ -58,7 +58,6 @@
      <Compile Include="Assets\Scripts\ClickButton.cs" />
      <Compile Include="Assets\Scripts\ClickEffect.cs" />
      <Compile Include="Assets\Scripts\DataController.cs" />
-     <Compile Include="Assets\Scripts\DoubleButton.cs" />
      <Compile Include="Assets\Scripts\EffectManager.cs" />
      <Compile Include="Assets\Scripts\GetIdleBonusButton.cs" />
      <Compile Include="Assets\Scripts\IdleBonusPopupController.cs" />

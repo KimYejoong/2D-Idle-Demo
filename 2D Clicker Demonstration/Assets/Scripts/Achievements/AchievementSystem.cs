@@ -192,6 +192,11 @@ public class AchievementSystem : MonoBehaviour
         {
             return _goal;
         }
+        
+        public float GetProgressInPercent()
+        {
+            return (float)(_progress / _goal);
+        }
 
         public string GetDescription()
         {

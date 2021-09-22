@@ -111,9 +111,9 @@ public class SkillButton : MonoBehaviour, Purchasable
 
     private void UpdateUI()
     {
-        skillDisplayText.text = skillName + "\nLevel: " + level + "\nCost : " + currentCost.ToCurrencyString() + "\nGold Multiplier: " + $"{goldMultiplier:0.00}" +
-                                "\nCooldown(remaining/total) : " + $"{cooldownRemaining:0}" + "/" + $"{cooldownDuration:0}" +
-                                "\nDuration(remaining/total)" + $"{remaining:0}" + "/" + $"{duration:0}";
+        skillDisplayText.text = skillName + "\n레벨: " + level + "\n가격 : " + currentCost.ToCurrencyString() + "\n초당 골드 획득 효율: " + $"{goldMultiplier:0.00}" +
+                                "\n재사용 대기(잔여/전체) : " + $"{cooldownRemaining:0}" + "/" + $"{cooldownDuration:0}" +
+                                "\n지속 시간(잔여/전체)" + $"{remaining:0}" + "/" + $"{duration:0}";
         
 
         //slider.minValue = 0;
