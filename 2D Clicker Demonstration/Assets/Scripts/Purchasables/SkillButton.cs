@@ -46,6 +46,10 @@ public class SkillButton : MonoBehaviour, Purchasable
 
     private ListPanelController _listPanelController;
 
+    #region 도전과제를 위한 이벤트 선언
+    public static event Action SkillActivated;
+    #endregion
+    
     private void Awake()
     {
         _listPanelController = GetComponentInParent<ListPanelController>();
@@ -143,6 +147,7 @@ public class SkillButton : MonoBehaviour, Purchasable
             return;
 
         isActivated = true;
+        SkillActivated?.Invoke();
 
         remaining = duration;
         cooldownRemaining = cooldownDuration;

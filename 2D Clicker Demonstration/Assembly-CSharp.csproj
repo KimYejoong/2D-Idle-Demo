@@ -52,6 +52,8 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\AchievementMenuOpenButton.cs" />
      <Compile Include="Assets\Scripts\AchievementPanelController.cs" />
+     <Compile Include="Assets\Scripts\Achievements\AchievementDisplayInstance.cs" />
+     <Compile Include="Assets\Scripts\Achievements\AchievementDisplayManager.cs" />
      <Compile Include="Assets\Scripts\Achievements\AchievementSystem.cs" />
      <Compile Include="Assets\Scripts\ClickButton.cs" />
      <Compile Include="Assets\Scripts\ClickEffect.cs" />

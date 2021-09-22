@@ -64,6 +64,7 @@ public class DataController : MonoBehaviour
 
     #region 도전과제를 위한 이벤트 선언
     public static event Action<double> EarnGold; // 재화 획득 시 업적 달성 등 체크하기 위해 이벤트 사용
+    public static event Action<double> FluctGold;
     public static event Action<double> EarningGoldPerSec;
     
     #endregion
@@ -74,8 +75,12 @@ public class DataController : MonoBehaviour
         get => PlayerPrefsExtended.GetDouble("Gold", 0);
         set
         {
+            double fluct = value - PlayerPrefsExtended.GetDouble("Gold", 0);
+            FluctGold?.Invoke(fluct);
+            
             PlayerPrefsExtended.SetDouble("Gold", value);
             EarnGold?.Invoke(value);
+            
         }
     }
     
