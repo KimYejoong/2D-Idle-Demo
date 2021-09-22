@@ -6,10 +6,6 @@ public class ListPanelController : MonoBehaviour
 {
     [SerializeField] private RectTransform scrollContent;
 
-    [SerializeField] private Transform parentPanel;
-
-    [SerializeField] private GameObject contents;
-
     public string tabName;
 
     public bool isSorted;
@@ -23,17 +19,13 @@ public class ListPanelController : MonoBehaviour
     {
         _rect = GetComponent<RectTransform>();
         _originalLocation = _rect.anchoredPosition;
-
+        
         _originalListInOrder = new List<Transform>();
 
-        foreach (Transform child in parentPanel) _originalListInOrder.Add(child.transform);
+        foreach (Transform child in scrollContent)
+            _originalListInOrder.Add(child.transform);
 
         _tabNameDisplay = FindObjectOfType<TabNameDisplay>();
-    }
-
-    private void Start()
-    {
-        // SortContents();
     }
 
     public void OpenTab()

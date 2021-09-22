@@ -11,6 +11,11 @@ public class AchievementDisplayInstance : MonoBehaviour
     [SerializeField] private Slider _slider;
 
     private Achievement _myAchievement;
+
+    public Achievement MyAchievement
+    {
+        get { return _myAchievement;  }
+    }
     
     private float _progressPercent;
     private bool _unlocked;
@@ -34,6 +39,6 @@ public class AchievementDisplayInstance : MonoBehaviour
         _progressPercent = updatedProgressInPercent;
         _unlocked = updatedUnlocked;
         _getRewardButton.interactable = _unlocked;
-        _slider.value = _progressPercent;
+        _slider.value = (_unlocked == true ? 1 : _progressPercent);
     }
 }

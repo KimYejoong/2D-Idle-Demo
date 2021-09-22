@@ -45,7 +45,7 @@ public class AchievementDisplayManager : MonoBehaviour
     public void SortContents()
     {
         var sortedListInOrder =
-            _originalListInOrder.OrderBy(item => item.GetComponent<AchievementDisplayInstance>()).ToList();
+            _originalListInOrder.OrderBy(item => item.GetComponent<AchievementDisplayInstance>().MyAchievement.GetProgress()).ToList();
 
         for (var i = 0; i < sortedListInOrder.Count; i++) sortedListInOrder[i].SetSiblingIndex(i);
 

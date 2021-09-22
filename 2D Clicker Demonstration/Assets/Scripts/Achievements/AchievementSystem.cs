@@ -28,6 +28,7 @@ public class AchievementSystem : MonoBehaviour
     }
     #endregion
 
+    private Queue<Achievement> _achievementDisplayQueue;
     private GameObject achievementButton;
     public Dictionary<string, Achievement> _achievements = new Dictionary<string, Achievement>();
 
@@ -39,6 +40,10 @@ public class AchievementSystem : MonoBehaviour
         DataController.EarningGoldPerSec += AchieveEarningGoldPerSec;
         DataController.FluctGold += AchieveGoldFluct;
         SkillButton.SkillActivated += AchieveSkillUse;
+
+        _achievementDisplayQueue = new Queue<Achievement>();
+
+        StartCoroutine(ShowAchievementInstant());
     }
     
     private void InitializeAchievements()
@@ -135,87 +140,109 @@ public class AchievementSystem : MonoBehaviour
         var goal = _achievements[achieveName].GetGoal();
         _achievements[achieveName].TryAchieve(nextProgress);
     }
-}
 
-public class Achievement
-{
-    private string _name;
-    private double _progress;
-    private double _goal;
-    private bool _unlocked;
-    private string _description;
-
-    public event Action<float, bool> ChangeInProgress;
-
-    public Achievement(string name, double progress, double goal, bool unlocked, string description)
+    public void AddAchievedQueue(Achievement achievement)
     {
-        _name = name;
-        _progress = progress;
-        _goal = goal;
-        _unlocked = unlocked;
-        _description = description;
+        _achievementDisplayQueue.Enqueue(achievement);
     }
 
-    public double GetProgress()
+    IEnumerator ShowAchievementInstant() // 한꺼번에 여러 도전과제 달성 시, 겹치지 않게 큐에 넣어서 순차적으로 보여줌
     {
-        return _progress;
-    }
-    
-    public double GetGoal()
-    {
-        return _goal;
-    }
-
-    public string GetDescription()
-    {
-        return _description;
-    }
-
-    public string GetName()
-    {
-        return _name;
-    }
-
-    public bool GetUnlocked()
-    {
-        return _unlocked;
-    }
-    
-    public void TryAchieve(double progress)
-    {
-        _progress = progress;
-
-        if (_unlocked)
-            return;
-
-        if (Math.Abs(_progress) >= Math.Abs((_goal)) && Math.Sign(_progress) == Math.Sign(_goal)) // 골드 획득(+)과 소모(-)에 따른 처리를 한번에 하기 위해 절대값 처리
+        if (_achievementDisplayQueue.Count > 0)
         {
-            _unlocked = true;
-            SaveAchievement();
-            Debug.Log("Unlocked Achievement = " + _name);
+            var achievement = _achievementDisplayQueue.Dequeue();
+            var newInstantText = UIManager.Instance.GenerateInstantText("도전과제 \"" + achievement.GetName() + "\" 달성!",
+                UIManager.Instance.transform,
+                Vector3.up * 240, 2f, TextAnchor.MiddleCenter, true);
+            newInstantText._myText.fontSize = 36;
+            newInstantText._myText.color = Color.white;
         }
-        
-        ChangeInProgress?.Invoke((float)(_progress / _goal), _unlocked);
-    }
-    
-    
-    // 도전과제 내용 설명은 진행에 따라 변경되는 게 아니므로 굳이 저장, 불러오기 하지 않음
-    public void LoadAchievement()
-    {
-        string key = _name;
 
-        _progress = PlayerPrefsExtended.GetDouble(key + "_progress");
-        _goal = PlayerPrefsExtended.GetDouble(key + "_goal");
-        _unlocked = PlayerPrefs.GetInt(key + "_unlocked") == 1;        
-    }
+        yield return new WaitForSeconds(3f);
 
-    public void SaveAchievement()
-    {
-        string key = _name;
-        
-        PlayerPrefsExtended.SetDouble(key + "_progress", _progress);
-        PlayerPrefsExtended.SetDouble(key + "_goal", _goal);
-        PlayerPrefs.SetInt(key + "_unlocked", _unlocked ? 1 : 0);
+        StartCoroutine(ShowAchievementInstant());
     }
-    
 }
+
+    public class Achievement
+    {
+        private string _name;
+        private double _progress;
+        private double _goal;
+        private bool _unlocked;
+        private string _description;
+
+        public event Action<float, bool> ChangeInProgress;
+
+        public Achievement(string name, double progress, double goal, bool unlocked, string description)
+        {
+            _name = name;
+            _progress = progress;
+            _goal = goal;
+            _unlocked = unlocked;
+            _description = description;
+        }
+
+        public double GetProgress()
+        {
+            return _progress;
+        }
+
+        public double GetGoal()
+        {
+            return _goal;
+        }
+
+        public string GetDescription()
+        {
+            return _description;
+        }
+
+        public string GetName()
+        {
+            return _name;
+        }
+
+        public bool GetUnlocked()
+        {
+            return _unlocked;
+        }
+
+        public void TryAchieve(double progress)
+        {
+            _progress = progress;
+
+            if (_unlocked)
+                return;
+
+            if (Math.Abs(_progress) >= Math.Abs((_goal)) &&
+                Math.Sign(_progress) == Math.Sign(_goal)) // 골드 획득(+)과 소모(-)에 따른 처리를 한번에 하기 위해 절대값 처리 및 부호 구분
+            {
+                _unlocked = true;
+                AchievementSystem.Instance.AddAchievedQueue(this);
+                SaveAchievement();
+            }
+
+            ChangeInProgress?.Invoke((float) (_progress / _goal), _unlocked);
+        }
+
+
+        // 도전과제 내용 설명은 진행에 따라 변경되는 게 아니므로 굳이 저장, 불러오기 하지 않음
+        public void LoadAchievement()
+        {
+            string key = _name;
+
+            _progress = PlayerPrefsExtended.GetDouble(key + "_progress");
+            _goal = PlayerPrefsExtended.GetDouble(key + "_goal");
+            _unlocked = PlayerPrefs.GetInt(key + "_unlocked") == 1;
+        }
+
+        public void SaveAchievement()
+        {
+            string key = _name;
+
+            PlayerPrefsExtended.SetDouble(key + "_progress", _progress);
+            PlayerPrefsExtended.SetDouble(key + "_goal", _goal);
+            PlayerPrefs.SetInt(key + "_unlocked", _unlocked ? 1 : 0);
+        }
+    }
