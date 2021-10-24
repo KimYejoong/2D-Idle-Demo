@@ -146,7 +146,7 @@ public class AchievementSystem : MonoBehaviour
         _achievementDisplayQueue.Enqueue(achievement);
     }
 
-    IEnumerator ShowAchievementInstant() // 한꺼번에 여러 도전과제 달성 시, 겹치지 않게 큐에 넣어서 순차적으로 보여줌
+    private IEnumerator ShowAchievementInstant() // 한꺼번에 여러 도전과제 달성 시, 겹치지 않게 큐에 넣어서 순차적으로 보여줌
     {
         if (_achievementDisplayQueue.Count > 0)
         {

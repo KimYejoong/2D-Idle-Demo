@@ -476,10 +476,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bde82e269ed09849b7d4ec67d40e60d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textTitle: {fileID: 1190770045333298003}
-  _textDescription: {fileID: 4195671798791926724}
-  _getRewardButton: {fileID: 1214592283612008311}
-  _slider: {fileID: 2654899487857002969}
+  textTitle: {fileID: 1190770045333298003}
+  textDescription: {fileID: 4195671798791926724}
+  getRewardButton: {fileID: 1214592283612008311}
+  slider: {fileID: 2654899487857002969}
 --- !u!1 &5977524444214472179
 GameObject:
   m_ObjectHideFlags: 0

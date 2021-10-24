@@ -2968,7 +2968,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 927feb2c5d8927a4ab1d57fa0def7096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 7489858685204666708, guid: 5d5f9914f497c474d8986d5f90200c88, type: 3}
+  prefab: {fileID: 7489858685204666708, guid: 5d5f9914f497c474d8986d5f90200c88, type: 3}
   poolSize: 15
 --- !u!4 &892697324
 Transform:
@@ -6379,7 +6379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98129630d0f3818448e6c1531eee633a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AchievementPanel: {fileID: 2077864236}
+  achievementPanel: {fileID: 2077864236}
 --- !u!1 &2060117367
 GameObject:
   m_ObjectHideFlags: 0

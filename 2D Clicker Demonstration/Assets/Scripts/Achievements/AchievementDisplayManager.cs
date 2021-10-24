@@ -19,7 +19,7 @@ public class AchievementDisplayManager : MonoBehaviour
         StartCoroutine(Init());
     }
 
-    IEnumerator Init()
+    private IEnumerator Init()
     {
         yield return new WaitForEndOfFrame();
 
